@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthMobileLogin from "./AuthMobileLogin";
 import BreadCrum from "../components/BreadCrum";
 import Meta from "../components/Meta";
@@ -13,16 +13,63 @@ import {
   eyeOpen,
 } from "../assets/assets";
 import Container from "../components/Container";
+import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
+import * as yup from "yup";
+import { loginUser, registerUser } from "../feature/user/userSlice";
+
+const signupSchema = yup.object({
+  firstname: yup.string().required("First Name is Required"),
+  lastname: yup.string().required("Last Name is Required"),
+  email: yup.string().required("Email Should be Valid"),
+  mobile: yup.string().required("Mobile Number is Required"),
+  password: yup.string().required("Password is Required"),
+});
+
+const loginSchema = yup.object({
+  email: yup.string().required("Email Should be Valid"),
+  password: yup.string().required("Password is Required"),
+});
 
 const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const formik = useFormik({
+    initialValues: {
+      firstname: "",
+      lastname: "",
+      email: "",
+      mobile: "",
+      password: "",
+      confirmPassword: "",
+    },
+    validationSchema: signupSchema,
+    onSubmit: async (values) => {
+      try {
+        await dispatch(registerUser(values));
+        setIsSignUp(false);
+      } catch (error) {
+        throw error;
+      }
+    },
+  });
+
+  const formikLogin = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: loginSchema,
+    onSubmit: (values) => {
+      dispatch(loginUser(values));
+    },
+  });
 
   const toggleForm = () => {
     setIsSignUp((prev) => !prev);
-    setPassword("");
   };
 
   const togglePasswordVisibility = () => {
@@ -30,23 +77,18 @@ const Auth = () => {
   };
 
   const passwordMatch = () => {
-    return password === confirmPassword;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
+    return formik.values.password === formik.values.confirmPassword;
   };
 
   return (
     <>
-      <Meta title={"Login"} />
-      <BreadCrum title="Login" />
+      <Meta title={"Account"} />
+      <BreadCrum title="Account" />
       <Container class1="login-wrapper home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12">
             <div className="d-md-none">
-              {" "}
-              <AuthMobileLogin />{" "}
+              <AuthMobileLogin />
             </div>
             <div
               className={`container d-none d-md-block ${
@@ -57,75 +99,100 @@ const Auth = () => {
               <div
                 className={`form-container ${isSignUp ? "sign-up" : "sign-in"}`}
               >
-                <form onSubmit={handleSubmit}>
-                  <h1>{isSignUp ? "Create Account" : "Login"}</h1>
-                  <div className="social-icon">
-                    <Link href="/" className="icon">
-                      <img
-                        src={Github}
-                        alt="social-icons"
-                        className="w-75 img-fluid"
+                {isSignUp ? (
+                  <form onSubmit={formik.handleSubmit}>
+                    <h1 className="mb-0">
+                      {isSignUp ? "Create Account" : "Login"}
+                    </h1>
+                    <div className="social-icon mb-1">
+                      <Link href="/" className="icon">
+                        <img
+                          src={Github}
+                          alt="social-icons"
+                          className="w-75 img-fluid"
+                        />
+                      </Link>
+                      <Link href="/" className="icon">
+                        <img
+                          src={Pinterest}
+                          alt="social-icons"
+                          className="w-75 img-fluid"
+                        />
+                      </Link>
+                      <Link href="/" className="icon">
+                        <img
+                          src={Instagram}
+                          alt="social-icons"
+                          className="w-75 img-fluid"
+                        />
+                      </Link>
+                      <Link href="/" className="icon">
+                        <img
+                          src={Twitter}
+                          alt="social-icons"
+                          className="w-75 img-fluid"
+                        />
+                      </Link>
+                    </div>
+                    <span className="mb-2">
+                      {isSignUp
+                        ? "or use your email for registration"
+                        : "or use your email password"}
+                    </span>
+                    {isSignUp && (
+                      <input
+                        type="text"
+                        name="firstname"
+                        placeholder="First Name"
+                        className="form-control"
+                        value={formik.values.firstname}
+                        onChange={formik.handleChange("firstname")}
+                        onBlur={formik.handleBlur("firstname")}
                       />
-                    </Link>
-                    <Link href="/" className="icon">
-                      <img
-                        src={Pinterest}
-                        alt="social-icons"
-                        className="w-75 img-fluid"
-                      />
-                    </Link>
-                    <Link href="/" className="icon">
-                      <img
-                        src={Instagram}
-                        alt="social-icons"
-                        className="w-75 img-fluid"
-                      />
-                    </Link>
-                    <Link href="/" className="icon">
-                      <img
-                        src={Twitter}
-                        alt="social-icons"
-                        className="w-75 img-fluid"
-                      />
-                    </Link>
-                  </div>
-                  <span>
-                    {isSignUp
-                      ? "or use your email for registration"
-                      : "or use your email password"}
-                  </span>
-                  {isSignUp && (
-                    <input
-                      type="text"
-                      placeholder="First Name"
-                      className="form-control"
-                    />
-                  )}
+                    )}
 
-                  {isSignUp && (
-                    <input
-                      type="text"
-                      placeholder="Last Name"
-                      className="form-control"
-                    />
-                  )}
+                    {isSignUp && (
+                      <input
+                        type="text"
+                        name="lastname"
+                        placeholder="Last Name"
+                        className="form-control"
+                        value={formik.values.lastname}
+                        onChange={formik.handleChange("lastname")}
+                        onBlur={formik.handleBlur("lastname")}
+                      />
+                    )}
 
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    className="form-control"
-                    required
-                  />
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                    placeholder="Password"
-                    value={password}
-                    className="form-control"
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  {isSignUp && (
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="Email"
+                      className="form-control"
+                      value={formik.values.email}
+                      onChange={formik.handleChange("email")}
+                      onBlur={formik.handleBlur("email")}
+                      required
+                    />
+
+                    {isSignUp && (
+                      <input
+                        name="mobile"
+                        placeholder="Mobile Number"
+                        className="form-control"
+                        value={formik.values.mobile}
+                        onChange={formik.handleChange("mobile")}
+                        onBlur={formik.handleBlur("mobile")}
+                      />
+                    )}
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      placeholder="Password"
+                      className="form-control"
+                      value={formik.values.password}
+                      onChange={formik.handleChange("password")}
+                      onBlur={formik.handleBlur("password")}
+                    />
                     <>
                       <div className="password-eye-signup">
                         <span onClick={togglePasswordVisibility}>
@@ -138,29 +205,86 @@ const Auth = () => {
                       </div>
                       <input
                         className={`${
-                          !passwordMatch() ? "text-bg-danger" : ""
+                          !passwordMatch() ? "bg-danger-subtle " : ""
                         }`}
                         type={showPassword ? "text" : "password"}
+                        name="confirmPassword"
                         placeholder="Confirm Password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        value={formik.values.confirmPassword}
+                        onChange={formik.handleChange("confirmPassword")}
+                        onBlur={formik.handleBlur("confirmPassword")}
                         required
                       />
 
                       <button
                         className="auth-button mt-3"
-                        type="submit"
                         disabled={!passwordMatch()}
+                        type="submit"
                       >
                         Sign Up
                       </button>
                     </>
-                  )}
+                  </form>
+                ) : (
+                  <form onSubmit={formikLogin.handleSubmit}>
+                    <h1>Login</h1>
+                    <div className="social-icon mb-1">
+                      <Link href="/" className="icon">
+                        <img
+                          src={Github}
+                          alt="social-icons"
+                          className="w-75 img-fluid"
+                        />
+                      </Link>
+                      <Link href="/" className="icon">
+                        <img
+                          src={Pinterest}
+                          alt="social-icons"
+                          className="w-75 img-fluid"
+                        />
+                      </Link>
+                      <Link href="/" className="icon">
+                        <img
+                          src={Instagram}
+                          alt="social-icons"
+                          className="w-75 img-fluid"
+                        />
+                      </Link>
+                      <Link href="/" className="icon">
+                        <img
+                          src={Twitter}
+                          alt="social-icons"
+                          className="w-75 img-fluid"
+                        />
+                      </Link>
+                    </div>
+                    <span className="mb-2">"or use your email password"</span>
 
-                  {!isSignUp && (
-                    <Link to="/forget-password">Forget Your Password?</Link>
-                  )}
-                  {!isSignUp && (
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="Email"
+                      className="form-control"
+                      value={formikLogin.values.email}
+                      onChange={formikLogin.handleChange("email")}
+                      onBlur={formikLogin.handleBlur("email")}
+                      required
+                    />
+
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      placeholder="Password"
+                      className="form-control"
+                      value={formikLogin.values.password}
+                      onChange={formikLogin.handleChange("password")}
+                      onBlur={formikLogin.handleBlur("password")}
+                    />
+
+                    <div className="mb-2">
+                      <Link to="/forget-password">Forget Your Password?</Link>
+                    </div>
+
                     <>
                       <div className="password-eyes-login">
                         <span onClick={togglePasswordVisibility}>
@@ -175,8 +299,8 @@ const Auth = () => {
                         Login
                       </button>
                     </>
-                  )}
-                </form>
+                  </form>
+                )}
               </div>
               <div className="toggle-container">
                 <div className="toggle">

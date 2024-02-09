@@ -365,7 +365,7 @@ const Home = () => {
             <div className="marquee-inner-wrapper">
               <Marquee className="d-flex">
                 {brandImages.map((item) => (
-                  <div className="mx-4" key={item}>
+                  <div className="mx-4" key={item.image}>
                     <img src={item.image} alt="Brands" />
                   </div>
                 ))}

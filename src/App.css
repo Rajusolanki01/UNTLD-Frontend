@@ -34,6 +34,13 @@
   margin-bottom: 30px;
 }
 
+.error {
+  font-size: 12px;
+  margin-top: 2px;
+  margin-left: 2px;
+  color: red;
+}
+
 body {
   font-family: "Rubik", sans-serif;
   overflow-x: hidden;
@@ -1169,7 +1176,7 @@ footer .input-group-text {
   overflow: hidden;
   width: 768px;
   max-width: 100%;
-  min-height: 520px;
+  min-height: 550px;
 }
 
 .container p {
@@ -1304,19 +1311,25 @@ footer .input-group-text {
 
 .password-eye-signup {
   position: absolute;
-  bottom: 27%;
+  bottom: 24.5%;
   right: 13%;
+  transform: translateY(-20%);
 }
 
 .password-eyes-login {
   position: absolute;
-  bottom: 36.5%;
+  bottom: 36%;
   right: 13%;
+  transform: translateY(-50%);
 }
 
 .eye-btn {
   width: 17px;
   height: 17px;
+}
+
+.show-error {
+  background-color: #1877f2;
 }
 
 @keyframes move {
@@ -1454,14 +1467,24 @@ footer .input-group-text {
 
 .auth-card .password-eye-mobile-login {
   position: absolute;
-  bottom: 125px;
+  bottom: 50%;
   right: 10px;
+  transform: translateY(-50%);
+}
+
+.auth-card .with-error-login {
+  top: calc(50% - 24px);
 }
 
 .auth-card .password-eye-mobile-signup {
   position: absolute;
-  bottom: 100px;
   right: 10px;
+  top: 77%;
+  transform: translateY(-50%);
+}
+
+.auth-card .with-error-signup {
+  top: calc(80% - 15px);
 }
 
 .auth-card .password-eye-reset {
