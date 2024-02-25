@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import BreadCrum from "../components/BreadCrum";
 import Meta from "../components/Meta";
-import { Watch, Watch2 } from "../assets/assets";
+import { Watch2 } from "../assets/assets";
 import { Link } from "react-router-dom";
 import Container from "../components/Container";
 

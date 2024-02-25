@@ -12,7 +12,6 @@ import { LiaTshirtSolid } from "react-icons/lia";
 import { RxDimensions } from "react-icons/rx";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { IoIosLink } from "react-icons/io";
-import { FiZoomIn } from "react-icons/fi";
 import Container from "../components/Container";
 
 const SingleProduct = () => {
@@ -201,13 +200,16 @@ const SingleProduct = () => {
                       </button>
                     </Link>
                     <Link to="/">
-                      <div data-tooltip="Price:- ₹90,000" class="buy-button">
-                        <div class="button-wrapper">
-                          <div class="texts">Buy it Now</div>
-                          <span class="buy-icon">
+                      <div
+                        data-tooltip="Price:- ₹90,000"
+                        className="buy-button"
+                      >
+                        <div className="button-wrapper">
+                          <div className="texts">Buy it Now</div>
+                          <span className="buy-icon">
                             <svg
                               viewBox="0 0 16 16"
-                              class="bi bi-cart2"
+                              className="bi bi-cart2"
                               fill="currentColor"
                               height="16"
                               width="16"

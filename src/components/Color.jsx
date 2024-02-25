@@ -1,13 +1,22 @@
 import React from "react";
 
-const Color = () => {
+const Color = ({ data }) => {
   return (
     <>
       <ul className="colors">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
+        {data &&
+          data.map((item, index) => (
+            <li key={index}>
+              {item.color.map((color, i) => (
+                <span
+                  key={i}
+                  style={{
+                    backgroundColor: color,
+                  }}
+                ></span>
+              ))}
+            </li>
+          ))}
       </ul>
     </>
   );

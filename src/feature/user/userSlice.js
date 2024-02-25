@@ -27,7 +27,7 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-const initialState = {
+const authState = {
   user: "",
   isError: false,
   isSuccess: false,
@@ -37,7 +37,7 @@ const initialState = {
 
 export const authSlice = createSlice({
   name: "auth",
-  initialState: initialState,
+  initialState: authState,
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -69,7 +69,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
+        state.user.message = action.error;
       });
   },
 });

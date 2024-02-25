@@ -13,10 +13,7 @@ import {
   Brands7,
   Brands8,
   Brands9,
-  Series9,
-  Macbook,
-  Google,
-  Iphone14,
+
 } from "../assets/assets.js";
 
 const services = [

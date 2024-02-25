@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
-import { Watch, Watch2 } from "../assets/assets";
+import {  Watch2 } from "../assets/assets";
 
 const SpecialProduct = () => {
   return (

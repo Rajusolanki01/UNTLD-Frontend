@@ -719,7 +719,7 @@ footer .input-group-text {
   display: block;
 }
 .product-card:hover .action-bar {
-  right: 10px;
+  right: 14px;
 }
 
 .product-card .product-details h6 {
@@ -743,7 +743,7 @@ footer .input-group-text {
 }
 
 .action-bar {
-  top: 15%;
+  top: 16%;
   right: -30px;
   transition: 0.3s ease-in-out;
 }
@@ -926,11 +926,13 @@ footer .input-group-text {
   cursor: pointer;
 }
 
-.colors li {
+.colors span {
   width: 18px;
   height: 18px;
-  background-color: red;
+  display: inline-block;
+  margin-right: 5px;
   border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.25);
 }
 
 .random-products h5 {
@@ -974,7 +976,7 @@ footer .input-group-text {
 }
 
 .gr-3 {
-  width: 24%;
+  width: 23.5%;
 }
 
 .gr-12 .product-card {
@@ -983,7 +985,7 @@ footer .input-group-text {
 }
 
 .gr-3 .product-image {
-  margin-left: -35px;
+  margin-left: -45px;
 }
 
 .gr-4 .product-image {
@@ -1010,7 +1012,7 @@ footer .input-group-text {
 }
 
 .gr-12 .action-bar {
-  top: 19%;
+  top: 20%;
 }
 
 /** OUR STORE PART START */

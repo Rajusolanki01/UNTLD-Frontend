@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BreadCrum from "../components/BreadCrum";
 import ReactStars from "react-rating-stars-component";
 import FeaturedCard from "../components/FeaturedCard";
@@ -6,10 +6,21 @@ import Color from "../components/Color";
 import Meta from "../components/Meta";
 import { Headphone, gr, gr2, gr3, gr4, ultraWatch2 } from "../assets/assets";
 import Container from "../components/Container";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProducts } from "../feature/product/productSlice";
 
 const OurStore = () => {
   const [grid, setGrid] = useState(4);
+  const dispatch = useDispatch();
+  const productState = useSelector((state) => state.product?.product);
+  console.log(productState);
+  const getProduct = () => {
+    dispatch(getAllProducts());
+  };
 
+  useEffect(() => {
+    getProduct();
+  }, []);
   return (
     <>
       <Meta title={"Our Store"} />
@@ -20,12 +31,14 @@ const OurStore = () => {
             <div className="filter-card mb-3">
               <h3 className="filter-title">Shop by Categories</h3>
               <div>
-                <ul className="ps-0">
-                  <li>Watch</li>
-                  <li>Tv</li>
-                  <li>Camera</li>
-                  <li>Laptop</li>
-                </ul>
+                {productState &&
+                  productState?.map((item, index) => {
+                    return (
+                      <ul key={index} className="ps-0 mb-1">
+                        <li>{item.category}</li>
+                      </ul>
+                    );
+                  })}
               </div>
             </div>
             <div className="filter-card mb-3">
@@ -78,7 +91,8 @@ const OurStore = () => {
                 </div>
                 <h5 className="sub-title">Colors</h5>
                 <div>
-                  <Color />
+                  {" "}
+                  <Color data={productState} />{" "}
                 </div>
                 <h5 className="sub-title">Sizes</h5>
                 <div>
@@ -110,68 +124,58 @@ const OurStore = () => {
             <div className="filter-card mb-3">
               <h3 className="filter-title">Products Tags</h3>
               <div role="button">
-                <div className="product-tags d-flex flex-wrap align-items-center gap-3">
-                  <span className="badge bg-light text-secondary rounded-1 py-2 px-3">
-                    Laptop
-                  </span>
-                  <span className="badge bg-light text-secondary rounded-3 py-2 px-3">
-                    Mobile
-                  </span>
-                  <span className="badge bg-light text-secondary rounded-3 py-2 px-3">
-                    Iphone
-                  </span>
-                  <span className="badge bg-light text-secondary rounded-3 py-2 px-3">
-                    Headphones
-                  </span>
-                  <span className="badge bg-light text-secondary rounded-3 py-2 px-3">
-                    Speaker
-                  </span>
-                  <span className="badge bg-light text-secondary rounded-3 py-2 px-3">
-                    Samsung
-                  </span>
-                  <span className="badge bg-light text-secondary rounded-3 py-2 px-3">
-                    Cloths
-                  </span>
-                </div>
+                {productState &&
+                  productState?.map((item, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="product-tags d-flex flex-wrap align-items-center gap-3"
+                      >
+                        {item.tags.map((tag, tagIndex) => (
+                          <span
+                            key={tagIndex}
+                            className="badge bg-light text-secondary rounded-1 py-2 px-3 m-1"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    );
+                  })}
               </div>
             </div>
             <div className="filter-card mb-3">
               <h3 className="filter-title">Random Products</h3>
               <div role="button">
-                <div className="random-products d-flex gap-2 mb-3">
-                  <div className="w-25">
-                    <img src={ultraWatch2} alt="Watch" className="img-fluid" />
-                  </div>
-                  <div className="w-75">
-                    <h5>
-                      Apple Watch Series 9 &nbsp; 48mm Stainless Steel...{" "}
-                    </h5>
-                    <ReactStars
-                      count={5}
-                      size={23}
-                      value={4}
-                      edit={false}
-                      activeColor="#febd69"
-                    />
-                    <p className="price">₹70,000/-</p>
-                  </div>
-                </div>
-                <div className="random-products d-flex gap-2">
-                  <div className="w-25">
-                    <img src={Headphone} alt="Watch" className="img-fluid" />
-                  </div>
-                  <div className="w-75">
-                    <h5>Beats Audio Super Bass Headphone Top Quality... </h5>
-                    <ReactStars
-                      count={5}
-                      size={23}
-                      value={4}
-                      edit={false}
-                      activeColor="#febd69"
-                    />
-                    <p className="price">₹40,000/-</p>
-                  </div>
-                </div>
+                {productState &&
+                  productState?.map((item, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="random-products d-flex gap-2 mb-3"
+                      >
+                        {" "}
+                        <div className="w-25">
+                          <img
+                            src={Headphone}
+                            alt="Watch"
+                            className="img-fluid"
+                          />
+                        </div>
+                        <div className="w-75">
+                          <h5>{item.title}</h5>
+                          <ReactStars
+                            count={parseInt(item.totalrating)}
+                            size={23}
+                            value={parseInt(item.totalrating)}
+                            edit={false}
+                            activeColor="#febd69"
+                          />
+                          <p className="price">₹{item.price}/-</p>
+                        </div>
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           </div>
@@ -238,7 +242,7 @@ const OurStore = () => {
             </div>
             <div className="product-list pb-5">
               <div className="d-flex gap-3 flex-wrap">
-                <FeaturedCard grid={grid} />
+                <FeaturedCard data={productState} grid={grid} />
               </div>
             </div>
           </div>
