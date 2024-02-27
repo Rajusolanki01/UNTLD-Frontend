@@ -14,9 +14,11 @@ import {
 } from "../assets/assets";
 import Container from "../components/Container";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
 import { loginUser, registerUser } from "../feature/user/userSlice";
+import LoadingCart from "../components/LoadingCart";
+import { toast } from "react-toastify";
 
 const signupSchema = yup.object({
   firstname: yup.string().required("First Name is Required"),
@@ -35,6 +37,8 @@ const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
+  const authState = useSelector((state) => state.auth);
+  const { isLoading, user } = authState;
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -65,8 +69,22 @@ const Auth = () => {
     validationSchema: loginSchema,
     onSubmit: (values) => {
       dispatch(loginUser(values));
+      if (user) {
+        toast.info(`Welcome ${user.firstname} ${user.lastname}`);
+      }
+      if (user.accessToken) {
+        navigate("/");
+      }
     },
   });
+
+  if (isLoading) {
+    return (
+      <div className="LoadingBar">
+        <LoadingCart />
+      </div>
+    );
+  }
 
   const toggleForm = () => {
     setIsSignUp((prev) => !prev);

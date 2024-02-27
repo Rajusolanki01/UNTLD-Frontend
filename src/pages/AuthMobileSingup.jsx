@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import BreadCrum from "../components/BreadCrum";
 import Meta from "../components/Meta";
 import { eyeClose, eyeOpen } from "../assets/assets";
 import Container from "../components/Container";
 import CustomsInput from "../components/CustomsInput";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { registerUser } from "../feature/user/userSlice";
+import { toast } from "react-toastify";
+import LoadingCart from "../components/LoadingCart";
 
 const signupSchema = yup.object({
   firstname: yup.string().required("First Name is Required"),
@@ -19,7 +21,12 @@ const signupSchema = yup.object({
 });
 
 const AuthMobileSingup = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const authState = useSelector((state) => state.auth);
+  const { isLoading, user } = authState;
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -31,13 +38,21 @@ const AuthMobileSingup = () => {
     validationSchema: signupSchema,
     onSubmit: (values) => {
       dispatch(registerUser(values));
+      navigate("/login");
     },
   });
-  const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
+
+  if (isLoading) {
+    return (
+      <div className="LoadingBar">
+        <LoadingCart />
+      </div>
+    );
+  }
 
   return (
     <>

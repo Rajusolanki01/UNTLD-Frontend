@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { productService } from "./productService";
 
 export const getAllProducts = createAsyncThunk(
-  "product/get",
+  "product/get-all-products",
   async (thunkAPI) => {
     try {
       return await productService.getProducts();
@@ -19,7 +19,7 @@ const productState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: "",
+  ismessage: "",
 };
 
 export const productSlice = createSlice({
@@ -41,7 +41,7 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
+        state.ismessage = action.error;
       });
   },
 });

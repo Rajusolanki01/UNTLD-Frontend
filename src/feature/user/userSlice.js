@@ -32,7 +32,7 @@ const authState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: "",
+  ismessage: "",
 };
 
 export const authSlice = createSlice({
@@ -54,7 +54,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
+        state.ismessage = action.error;
       })
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
@@ -69,7 +69,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.user.message = action.error;
+        state.ismessage = action.error;
       });
   },
 });
