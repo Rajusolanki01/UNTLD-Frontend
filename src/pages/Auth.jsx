@@ -105,11 +105,11 @@ const Auth = () => {
       <Container class1="login-wrapper home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12">
-            <div className="d-md-none">
+            {/*   <div className="d-md-none">
               <AuthMobileLogin />
-            </div>
+            </div> */}
             <div
-              className={`container d-none d-md-block ${
+              className={`container "d-noned-md-block" ${
                 isSignUp ? "active " : ""
               }`}
               id="container"
@@ -119,7 +119,7 @@ const Auth = () => {
               >
                 {isSignUp ? (
                   <form onSubmit={formik.handleSubmit}>
-                    <h1 className="mb-0">
+                    <h1 className="mb-0 heading">
                       {isSignUp ? "Create Account" : "Login"}
                     </h1>
                     <div className="social-icon mb-1">
@@ -245,7 +245,7 @@ const Auth = () => {
                   </form>
                 ) : (
                   <form onSubmit={formikLogin.handleSubmit}>
-                    <h1>Login</h1>
+                    <h1 className="heading">Login</h1>
                     <div className="social-icon mb-1">
                       <Link href="/" className="icon">
                         <img

@@ -167,14 +167,20 @@ const Checkout = () => {
                   <div className="d-flex justify-content-between align-items-center">
                     <Link
                       to="/cart"
-                      className="d-flex align-items-center gap-2 text-dark"
+                      className="font d-flex align-items-center gap-2 text-dark"
                     >
-                      <BiArrowBack style={{ fontSize: "20px" }} />
+                      <BiArrowBack
+                        style={{ fontSize: "20px" }}
+                        className="font"
+                      />
                       Return to Cart
                     </Link>
                     {!loading ? (
                       <Link to="">
-                        <button className="buttons" onClick={startoading}>
+                        <button
+                          className="buttons font-2"
+                          onClick={startoading}
+                        >
                           Continue to Shipping
                         </button>
                       </Link>
@@ -195,9 +201,36 @@ const Checkout = () => {
           </div>
           <div className="col-5">
             <div className="border-bottom py-0">
-              <div className="d-flex align-items-center mb-2 gap-3">
-                <div className="w-75 d-flex gap-4">
-                  <div className="w-25 position-relative">
+              <div className="d-flex flex-wrap align-items-center mb-2 gap-3">
+                <div className="w-75 side-card d-flex flex-wrap gap-4">
+                  <div className="side-card w-25 position-relative">
+                    <span
+                      style={{ top: "-9%", right: "-5%" }}
+                      className="badge bg-secondary text-white rounded-circle position-absolute"
+                    >
+                      1
+                    </span>
+                    <div className="p-1 border bg-white">
+                      <img
+                        src={Watch2}
+                        alt="Product Img"
+                        className="img-fluid"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <h5 className="title mt-1">Apple Watch Series 9</h5>
+                    <p className="mb-1">Titanium White 49mm Stainless Steel</p>
+                    <p className="mb-0">M / White</p>
+                  </div>
+                </div>
+                <div className="flex-grow-1">
+                  <h5>₹90,500</h5>
+                </div>
+              </div>
+              <div className="d-flex flex-wrap align-items-center mb-2 gap-3">
+                <div className="w-75 side-card d-flex flex-wrap gap-4">
+                  <div className="side-card w-25 position-relative">
                     <span
                       style={{ top: "-9%", right: "-5%" }}
                       className="badge bg-secondary text-white rounded-circle position-absolute"

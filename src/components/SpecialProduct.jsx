@@ -1,18 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
-import {  Watch2 } from "../assets/assets";
+import { Watch2 } from "../assets/assets";
 
 const SpecialProduct = () => {
   return (
-    <div className="col-6 mb-3">
+    <div className="col-lg-6 col-md-6 col-sm-12 mb-3">
       <div className="special-product-card">
         <div className="d-flex justify-content-between">
           <div className="w-50 d-flex align-items-center">
             <img src={Watch2} alt="Watch" className="w-75 img-fluid" />
           </div>
           <div className="special-product-content">
-            <h5 className="brand">Samung</h5>
+            <h5 className="brand">Samung</h5>{" "}
+
             <Link>
               <h6 className="title text-black d-flex flex-wrap">
                 Samsung Galaxy Watch Series 7

@@ -4,7 +4,7 @@ import ReactStars from "react-rating-stars-component";
 import FeaturedCard from "../components/FeaturedCard";
 import Color from "../components/Color";
 import Meta from "../components/Meta";
-import { Headphone, gr, gr2, gr3, gr4, ultraWatch2 } from "../assets/assets";
+import { Headphone, gr, gr2, gr3, gr4 } from "../assets/assets";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../feature/product/productSlice";
@@ -13,7 +13,7 @@ const OurStore = () => {
   const [grid, setGrid] = useState(4);
   const dispatch = useDispatch();
   const productState = useSelector((state) => state.product?.product);
-  console.log(productState);
+
   const getProduct = () => {
     dispatch(getAllProducts());
   };
@@ -69,7 +69,7 @@ const OurStore = () => {
                   </label>
                 </div>
                 <h5 className="sub-title">Price</h5>
-                <div className="d-flex align-items-center gap-2">
+                <div className="d-flex flex-wrap align-items-center gap-2">
                   <div className="form-floating">
                     <input
                       type="text"
@@ -146,13 +146,13 @@ const OurStore = () => {
             </div>
             <div className="filter-card mb-3">
               <h3 className="filter-title">Random Products</h3>
-              <div role="button">
+              <div role="button" className="">
                 {productState &&
                   productState?.map((item, index) => {
                     return (
                       <div
                         key={index}
-                        className="random-products d-flex gap-2 mb-3"
+                        className="random-products d-flex flex-wrap flex-grow-1 gap-2 mb-3"
                       >
                         {" "}
                         <div className="w-25">
@@ -162,12 +162,12 @@ const OurStore = () => {
                             className="img-fluid"
                           />
                         </div>
-                        <div className="w-75">
+                        <div className="w-70">
                           <h5>{item.title}</h5>
                           <ReactStars
-                            count={parseInt(item.totalrating)}
+                            count={5}
                             size={23}
-                            value={parseInt(item.totalrating)}
+                            value={3}
                             edit={false}
                             activeColor="#febd69"
                           />
@@ -181,7 +181,7 @@ const OurStore = () => {
           </div>
           <div className="col-9">
             <div className="filter-sort-grid mb-4">
-              <div className="d-flex justify-content-between gap-3">
+              <div className="d-flex flex-wrap  justify-content-between gap-3">
                 <div className="d-flex align-items-center ">
                   <p className="mb-0" style={{ width: "100px" }}>
                     Sort By :
@@ -199,9 +199,9 @@ const OurStore = () => {
                     <option value="created-descending">Date, new to old</option>
                   </select>
                 </div>
-                <div className="d-flex align-items-center gap-3">
-                  <p className="total-products mb-0 ">21 Products</p>
-                  <div className="d-flex gap-3 align-items-center grid">
+                <div className="d-flex flex-wrap align-items-center gap-3 ">
+                  <p className="total-products mb-0">21 Products</p>
+                  <div className="grid-sm d-flex gap-3 align-items-center grid">
                     <img
                       onClick={() => {
                         setGrid(3);

@@ -23,6 +23,7 @@ import Laptop from "./Laptop.png";
 import Macbook from "./Mac.png";
 import Pinterest from "./pinterest.png";
 import Series9 from "./Series9.png";
+import Series from "./Apple-Watch-S9-hero-230912_Full-Bleed-Image.jpg.large.jpg";
 import Speaker from "./Speaker.png";
 import Tv from "./Tv.png";
 import Twitter from "./twitter.png";
@@ -89,6 +90,7 @@ export {
   Macbook,
   Pinterest,
   Series9,
+  Series,
   Speaker,
   Tv,
   Twitter,
@@ -124,5 +126,5 @@ export {
   imgZoom,
   Wishlist,
   UNTLDG,
-  UNTLDPNG
+  UNTLDPNG,
 };

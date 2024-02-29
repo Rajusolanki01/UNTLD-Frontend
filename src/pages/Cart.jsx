@@ -31,21 +31,21 @@ const Cart = () => {
                 <h4 className="cart-col-4">Total</h4>
               </div>
               <div className="cart-data py-3 mb-2 d-flex justify-content-between  align-items-center">
-                <div className="cart-col-1 d-flex align-items-center gap-3">
-                  <div className="w-25">
+                <div className="cart-col-1 d-flex  align-items-center gap-3">
+                  <div className="w-25 cart-image">
                     <img src={Watch2} alt="Product Img" className="img-fluid" />
                   </div>
-                  <div className="w-75">
+                  <div className="w-75 cart-image">
                     <p>Apple UtlraWatch Series 9 </p>
                     <p>Size: M</p>
                     <p>Color: White</p>
                   </div>
                 </div>
                 <div className="cart-col-2">
-                  <h5 className="price">₹90,000</h5>
+                  <h5 className="price">₹50,000</h5>
                 </div>
-                <div className="cart-col-3 d-flex align-items-center gap-3">
-                  <div>
+                <div className="cart-col-3 d-flex align-items-center gap-2">
+                  <div className="form-input">
                     <input
                       className="form-control"
                       type="number"
@@ -100,21 +100,95 @@ const Cart = () => {
                 </div>
                 <div className="cart-col-4">
                   {" "}
-                  <h5 className="price">₹30,000 /-</h5>
+                  <h5 className="price">₹50,000 /-</h5>
+                </div>
+              </div>
+              <div className="cart-data py-3 mb-2 d-flex justify-content-between  align-items-center">
+                <div className="cart-col-1 d-flex  align-items-center gap-3">
+                  <div className="w-25 cart-image">
+                    <img src={Watch2} alt="Product Img" className="img-fluid" />
+                  </div>
+                  <div className="w-75 cart-image">
+                    <p>Apple UtlraWatch Series 9 </p>
+                    <p>Size: M</p>
+                    <p>Color: White</p>
+                  </div>
+                </div>
+                <div className="cart-col-2">
+                  <h5 className="price">₹50,000</h5>
+                </div>
+                <div className="cart-col-3 d-flex align-items-center gap-2">
+                  <div className="form-input">
+                    <input
+                      className="form-control"
+                      type="number"
+                      defaultValue={0}
+                      min={1}
+                      max={10}
+                      name=""
+                      id=""
+                      style={{ width: "60px" }}
+                    />
+                  </div>
+                  <div>
+                    <button className="delete-button">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 69 14"
+                        className="svgIcon bin-top"
+                      >
+                        <g clipPath="url(#clip0_35_24)">
+                          <path
+                            fill="black"
+                            d="M20.8232 2.62734L19.9948 4.21304C19.8224 4.54309 19.4808 4.75 19.1085 4.75H4.92857C2.20246 4.75 0 6.87266 0 9.5C0 12.1273 2.20246 14.25 4.92857 14.25H64.0714C66.7975 14.25 69 12.1273 69 9.5C69 6.87266 66.7975 4.75 64.0714 4.75H49.8915C49.5192 4.75 49.1776 4.54309 49.0052 4.21305L48.1768 2.62734C47.3451 1.00938 45.6355 0 43.7719 0H25.2281C23.3645 0 21.6549 1.00938 20.8232 2.62734ZM64.0023 20.0648C64.0397 19.4882 63.5822 19 63.0044 19H5.99556C5.4178 19 4.96025 19.4882 4.99766 20.0648L8.19375 69.3203C8.44018 73.0758 11.6746 76 15.5712 76H53.4288C57.3254 76 60.5598 73.0758 60.8062 69.3203L64.0023 20.0648Z"
+                          />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_35_24">
+                            <rect fill="white" height={14} width={69} />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 69 57"
+                        className="svgIcon bin-bottom"
+                      >
+                        <g clipPath="url(#clip0_35_22)">
+                          <path
+                            fill="black"
+                            d="M20.8232 -16.3727L19.9948 -14.787C19.8224 -14.4569 19.4808 -14.25 19.1085 -14.25H4.92857C2.20246 -14.25 0 -12.1273 0 -9.5C0 -6.8727 2.20246 -4.75 4.92857 -4.75H64.0714C66.7975 -4.75 69 -6.8727 69 -9.5C69 -12.1273 66.7975 -14.25 64.0714 -14.25H49.8915C49.5192 -14.25 49.1776 -14.4569 49.0052 -14.787L48.1768 -16.3727C47.3451 -17.9906 45.6355 -19 43.7719 -19H25.2281C23.3645 -19 21.6549 -17.9906 20.8232 -16.3727ZM64.0023 1.0648C64.0397 0.4882 63.5822 0 63.0044 0H5.99556C5.4178 0 4.96025 0.4882 4.99766 1.0648L8.19375 50.3203C8.44018 54.0758 11.6746 57 15.5712 57H53.4288C57.3254 57 60.5598 54.0758 60.8062 50.3203L64.0023 1.0648Z"
+                          />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_35_22">
+                            <rect fill="white" height={57} width={69} />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <div className="cart-col-4">
+                  {" "}
+                  <h5 className="price">₹50,000 /-</h5>
                 </div>
               </div>
             </div>
+
             <div className="col-12 py-2 mt-4">
               <div className="d-flex justify-content-between align-align-items-baseline">
                 <div>
-                  <Link to="/store" className="buttons">
+                  <Link to="/store" className="buttons continue-head">
                     Continue to Shopping
                   </Link>
                 </div>
-                <div className="d-flex flex-column align-items-end">
-                  <h4>Subtotal: ₹90,000 </h4>
+                <div className="check-head d-flex flex-column align-items-end">
+                  <h4>Subtotal: ₹1,00,000 </h4>
                   <p>Taxes and shipping calculated at checkout</p>
-                  <Link to="/checkout" className="buttons">
+                  <Link to="/checkout" className="buttons continue-head">
                     Checkout
                   </Link>
                 </div>

@@ -14,7 +14,7 @@ const Contact = () => {
       <BreadCrum title="Contact Us" />
       <Container class1="contact-wrapper home-wrapper-2 py-4">
         <div className="row">
-          <div className="col-12">
+          <div className="col-lg-12 col-md-12 mb-5">
             <iframe
               title="Google Maps"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14044.308294549328!2d77.28178002766526!3d28.356519346174668!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cdc043eb94e6d%3A0x8142870f7db64fdf!2sSector%2023%2C%20Faridabad%2C%20Haryana!5e0!3m2!1sen!2sin!4v1706030083199!5m2!1sen!2sin"
@@ -24,7 +24,7 @@ const Contact = () => {
               referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
           </div>
-          <div className="col-12 mt-5">
+          <div className="col-lg-12 col-md-12 mb-5 mt-5">
             <div className="contact-inner-wrapper d-flex justify-content-between">
               <div>
                 <h4 className="contact-title mb-4">Contact</h4>
@@ -86,10 +86,10 @@ const Contact = () => {
               </div>
               <div>
                 <h4 className="contact-title mb-4">Get in Touch with us</h4>
-                <div>
+                <div className="">
                   <ul className="ps-0">
                     <li className="mb-3 d-flex gap-3 align-items-center">
-                      <FaHome className="fs-5 text-black-50 " />
+                      <FaHome className="fs-5 home text-black-50" />
                       <address className="mb-0 Link text-black-50">
                         Hno.552 Sector-23, Faridabad Haryana, PinCode: 121005
                       </address>

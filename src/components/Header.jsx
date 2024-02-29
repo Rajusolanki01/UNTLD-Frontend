@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { NavLink, Link } from "react-router-dom";
-import {UNTLD} from "../assets/assets"
+import { UNTLD } from "../assets/assets";
 
 const Header = () => {
   useEffect(() => {
@@ -20,14 +20,14 @@ const Header = () => {
         <div className="container-xxl">
           <div className="row">
             <div className="col-6">
-              <p className="text-white mb-0">
+              <p className="text-white mb-0 head">
                 Free Shipping Over ₹1000 & Free Returns{" "}
               </p>
             </div>
             <div className="col-6">
-              <p className="text-white text-end mb-0">
+              <p className="text-white text-end mb-0 head">
                 Hotline:{" "}
-                <a className="text-white" href="tel:+">
+                <a className="text-white head" href="tel:+">
                   (+91) 87000-(264)-51
                 </a>
               </p>
@@ -49,7 +49,7 @@ const Header = () => {
                 </Link>
               </h2>
             </div>
-            <div className="col-5">
+            <div className="col-5 d-lg-block d-none">
               <div className="input-group">
                 <input
                   type="text"
@@ -67,7 +67,7 @@ const Header = () => {
                 </span>
               </div>
             </div>
-            <div className="col-5">
+            <div className="col-5 d-lg-block d-none">
               <div className="header-upper-links d-flex align-items-center justify-content-between">
                 <div>
                   <Link
@@ -146,7 +146,7 @@ const Header = () => {
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
-              <div className="menu-bottom d-flex align-items-center gap-3 ">
+              <div className="menu-bottom d-flex align-items-center">
                 <div>
                   <div className="dropdown">
                     <button
@@ -161,7 +161,7 @@ const Header = () => {
                         colors="primary:#ffffff"
                         style={{ width: "30px", height: "30px" }}
                       ></lord-icon>
-                      <span className="me-5  d-inline-block">
+                      <span className="me-5 d-inline-block">
                         Shop Categories
                       </span>
                     </button>
@@ -172,26 +172,35 @@ const Header = () => {
                       <li>
                         <Link to="/" className="dropdown-item text-white">
                           {" "}
-                          Action
+                          Home
                         </Link>
                       </li>
                       <li>
-                        <Link to="/" className="dropdown-item text-white">
+                        <Link to="/store" className="dropdown-item text-white">
                           {" "}
-                          Action
+                          Our Store
                         </Link>
                       </li>
                       <li>
-                        <Link to="/" className="dropdown-item text-white">
+                        <Link to="/blogs" className="dropdown-item text-white">
                           {" "}
-                          Action
+                          Blogs
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/contact"
+                          className="dropdown-item text-white"
+                        >
+                          {" "}
+                          Contact
                         </Link>
                       </li>
                     </ul>
                   </div>
                 </div>
-                <div className="menu-links">
-                  <div className="d-flex align-align-items-center gap-3">
+                <div className="menu-links d-lg-block d-none">
+                  <div className="d-flex align-align-items-center gap-3 ">
                     <NavLink to="/">
                       <span>Home</span>
                     </NavLink>

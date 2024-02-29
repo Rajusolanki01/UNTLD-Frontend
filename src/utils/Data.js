@@ -13,13 +13,12 @@ import {
   Brands7,
   Brands8,
   Brands9,
-
 } from "../assets/assets.js";
 
 const services = [
   {
     title: "Free Shipping",
-    tagline: "From All Orders Over ₹1000",
+    tagline: "All Orders Over ₹1000",
     image: Truck,
   },
   {
@@ -42,7 +41,12 @@ const services = [
 
   {
     title: "Secure Payments",
-    tagline: "100% Protacted Payments",
+    tagline: "100% Protacted ",
+    image: Card,
+  },
+  {
+    title: "Secure Payments",
+    tagline: "100% Protacted ",
     image: Card,
   },
 ];

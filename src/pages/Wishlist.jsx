@@ -12,7 +12,7 @@ const Wishlist = () => {
       {
         <Container class1="wishlist-wrapper home-wrapper-2 py-5">
           <div className="row">
-            <div className="col-3">
+            <div className="col-3 col-66">
               <div className="wishlist-card position-relative">
                 <div className="position-absolute cross">
                   <lord-icon
@@ -30,7 +30,7 @@ const Wishlist = () => {
                 </div>
               </div>
             </div>
-            <div className="col-3">
+            <div className="col-3 col-66">
               <div className="wishlist-card position-relative">
                 <div className="position-absolute cross">
                   <lord-icon
@@ -48,7 +48,7 @@ const Wishlist = () => {
                 </div>
               </div>
             </div>
-            <div className="col-3">
+            <div className="col-3 col-66">
               <div className="wishlist-card position-relative">
                 <div className="position-absolute cross">
                   <lord-icon
@@ -66,7 +66,7 @@ const Wishlist = () => {
                 </div>
               </div>
             </div>
-            <div className="col-3">
+            <div className="col-3 col-66">
               <div className="wishlist-card position-relative">
                 <div className="position-absolute cross">
                   <lord-icon

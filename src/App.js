@@ -44,6 +44,7 @@ function App() {
             <Route path="forget-password" element={<ForgetPassowrd />} />
             <Route path="reset-password" element={<ResetPassword />} />
             <Route path="signup" element={<AuthMobileSingup />} />
+            {/* ::TODO When MEDIA QUERY IS OK FOR AUTH LOGIN THEN REMOVE SIGNUP ROUTE */}
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route path="refund-policy" element={<RefundPolicy />} />
             <Route path="shipping-policy" element={<ShippingPolicy />} />

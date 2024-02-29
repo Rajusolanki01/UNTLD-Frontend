@@ -1,20 +1,28 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Facebook, Github, Instagram, Pinterest, Subscribe, Twitter, iconNewsLatter } from "../assets/assets";
+import {
+  Facebook,
+  Github,
+  Instagram,
+  Pinterest,
+  Subscribe,
+  Twitter,
+  iconNewsLatter,
+} from "../assets/assets";
 
 const Footer = () => {
   return (
     <>
-      <footer className="py-3">
+      <footer className="py-3 footer">
         <div className="container-xxl">
           <div className="row align-items-center">
-            <div className="col-5">
-              <div className="footer-top-data d-flex gap-3 align-items-center">
+            <div className="col-md-5">
+              <div className="footer-top-data d-flex gap-3 align-items-center ">
                 <img src={iconNewsLatter} alt="Newsletter" />
                 <h3 className="mb-0 text-white">Sign Up for Latest Drops</h3>
               </div>
             </div>
-            <div className="col-7">
+            <div className="col-md-7 mt-md-0 mt-3">
               <div className="input-group">
                 <input
                   type="text"
@@ -34,94 +42,86 @@ const Footer = () => {
       <footer className="py-4">
         <div className="container-xxl">
           <div className="row">
-            <div className="col-4">
+            <div className="col-lg-4 col-md-6 mb-4 mb-md-0">
               <h5 className="text-white mb-4">Contact Us</h5>
-              <div className="d-flex flex-column">
-                <address className="text-white Link">
-                  Hno.552 Sector-23,
-                  <br />
-                  Faridabad Haryana, <br />
-                  PinCode: 121005
-                </address>
-                <a className="text-white Link mb-2" href="tel:+">
-                  (+91) 87000-(264)-51
-                </a>
-                <a
-                  className="text-white mt-2 mb-3 Link"
-                  href="mailto:rajusolanki787@gmail.com"
-                >
-                  rajusolanki787@gmail.com
-                </a>
-                <div className="social-icons">
-                  <ul className="wrapper">
-                    <li className="icon facebook">
-                      <span className="tooltip">Facebook</span>
-                      <span>
-                        <i className="fab fa-facebook-f">
-                          {" "}
-                          <Link to="/">
-                            <img src={Facebook} alt="Facebook" />
-                          </Link>
-                        </i>
-                      </span>
-                    </li>
-                    <li className="icon twitter">
-                      <span className="tooltip">Twitter</span>
-                      <span>
-                        <i className="fab fa-twitter">
-                          <Link to="/">
-                            <img src={Twitter} alt="Twitter" />
-                          </Link>
-                        </i>
-                      </span>
-                    </li>
-                    <li className="icon instagram">
-                      <span className="tooltip">Instagram</span>
-                      <span>
-                        <i className="fab fa-instagram">
-                          {" "}
-                          <Link to="/">
-                            <img
-                              src={Instagram}
-                              alt="Instagram"
-                            />
-                          </Link>
-                        </i>
-                      </span>
-                    </li>
-                    <li className="icon pinterest">
-                      <span className="tooltip">Pinterest</span>
-                      <span>
-                        <i className="fab fa-pinterest">
-                          {" "}
-                          <Link to="/">
-                            <img
-                              src={Pinterest}
-                              alt="Pinterest"
-                            />
-                          </Link>
-                        </i>
-                      </span>
-                    </li>
+              <address className="text-white Link">
+                Hno.552 Sector-23,
+                <br />
+                Faridabad Haryana, <br />
+                PinCode: 121005
+              </address>
+              <a className="text-white Link" href="tel:+">
+                (+91) 87000-(264)-51
+              </a>
+              <a
+                className="text-white mt-2 Link"
+                href="mailto:rajusolanki787@gmail.com"
+              >
+                rajusolanki787@gmail.com
+              </a>
+              <div className="social-icons mt-3">
+                <ul className="wrapper">
+                  <li className="icon facebook">
+                    <span className="tooltip">Facebook</span>
+                    <span>
+                      <i className="fab fa-facebook-f">
+                        {" "}
+                        <Link to="/">
+                          <img src={Facebook} alt="Facebook" />
+                        </Link>
+                      </i>
+                    </span>
+                  </li>
+                  <li className="icon twitter">
+                    <span className="tooltip">Twitter</span>
+                    <span>
+                      <i className="fab fa-twitter">
+                        <Link to="/">
+                          <img src={Twitter} alt="Twitter" />
+                        </Link>
+                      </i>
+                    </span>
+                  </li>
+                  <li className="icon instagram">
+                    <span className="tooltip">Instagram</span>
+                    <span>
+                      <i className="fab fa-instagram">
+                        {" "}
+                        <Link to="/">
+                          <img src={Instagram} alt="Instagram" />
+                        </Link>
+                      </i>
+                    </span>
+                  </li>
+                  <li className="icon pinterest">
+                    <span className="tooltip">Pinterest</span>
+                    <span>
+                      <i className="fab fa-pinterest">
+                        {" "}
+                        <Link to="/">
+                          <img src={Pinterest} alt="Pinterest" />
+                        </Link>
+                      </i>
+                    </span>
+                  </li>
 
-                    <li className="icon github">
-                      <span className="tooltip">Github</span>
-                      <span>
-                        <i className="fab fa-github">
-                          {" "}
-                          <Link to="/">
-                            <img src={Github} alt="Github" />
-                          </Link>
-                        </i>
-                      </span>
-                    </li>
-                  </ul>
-                </div>
+                  <li className="icon github">
+                    <span className="tooltip">Github</span>
+                    <span>
+                      <i className="fab fa-github">
+                        {" "}
+                        <Link to="/">
+                          <img src={Github} alt="Github" />
+                        </Link>
+                      </i>
+                    </span>
+                  </li>
+                </ul>
               </div>
             </div>
-            <div className="col-3">
+            <div className="col-lg-3 col-md-6 mb-4 mb-md-0">
               <h5 className="text-white mb-4">Information</h5>
-              <div className="footer-links d-flex  flex-column">
+              <div className="footer-links d-flex flex-column">
                 <Link
                   to="/privacy-policy"
                   className="Link text-white py-2 mb-1"
@@ -148,7 +148,7 @@ const Footer = () => {
                 </Link>
               </div>
             </div>
-            <div className="col-3">
+            <div className="col-lg-3 col-md-6 mb-4 mb-md-0">
               <h5 className="text-white mb-4">Account</h5>
               <div className="footer-links d-flex  flex-column">
                 <Link to="/" className="Link text-white py-2 mb-1">
@@ -168,9 +168,9 @@ const Footer = () => {
                 </Link>
               </div>
             </div>
-            <div className="col-2">
+            <div className="col-lg-2 col-md-6">
               <h5 className="text-white mb-4">Quick Links</h5>
-              <div className="footer-links d-flex  flex-column">
+              <div className="footer-links d-flex flex-column">
                 <Link to="/" className="Link text-white py-2 mb-1">
                   Accessories
                 </Link>
