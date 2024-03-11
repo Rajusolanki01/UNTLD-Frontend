@@ -21,7 +21,7 @@ import RefundPolicy from "./pages/RefundPolicy";
 import TermAndCondition from "./pages/TermAndCondition";
 import SingleProduct from "./pages/SingleProduct";
 import Checkout from "./pages/Checkout";
-import { Toaster } from "react-hot-toast";
+import { Toaster } from "sonner";
 
 function App() {
   return (
@@ -53,7 +53,7 @@ function App() {
         </Routes>
       </BrowserRouter>
       <div>
-        <Toaster position="top-center" reverseOrder={false} />
+      <Toaster position="top-center" expand={false} />
       </div>
     </>
   );

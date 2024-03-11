@@ -1,8 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { UNTLD } from "../assets/assets";
 
 const Header = () => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://cdn.lordicon.com/lordicon.js";
@@ -13,6 +16,15 @@ const Header = () => {
       document.body.removeChild(script);
     };
   }, []);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+    setIsCheckboxChecked(!isCheckboxChecked);
+  };
+  const closeDropdown = () => {
+    setIsDropdownOpen(false);
+    setIsCheckboxChecked(false);
+  };
 
   return (
     <>
@@ -37,7 +49,7 @@ const Header = () => {
       </header>
       <header className="header-upper py-3">
         <div className="container-xxl">
-          <div className="row align-items-center">
+          <div className="row d-flex justify-content-between align-items-center position-relative">
             <div className="col-2">
               <h2>
                 <Link to="/" className="text-white">
@@ -49,7 +61,141 @@ const Header = () => {
                 </Link>
               </h2>
             </div>
-            <div className="col-5 d-lg-block d-none">
+            <div className="col-5 drop-btn d-md-none">
+              <div className="hamburger dropdowns" onClick={toggleDropdown}>
+                <input
+                  className="checkbox"
+                  type="checkbox"
+                  checked={isCheckboxChecked}
+                  onChange={() => setIsCheckboxChecked(!isCheckboxChecked)}
+                />
+                <svg fill="none" viewBox="0 0 50 50" height={50} width={50}>
+                  <path
+                    className="lineTop line"
+                    strokeLinecap="round"
+                    strokeWidth={4}
+                    stroke="yellow"
+                    d="M6 11L44 11"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeWidth={4}
+                    stroke="black"
+                    d="M6 24H43"
+                    className="lineMid line"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeWidth={4}
+                    stroke="black"
+                    d="M6 37H43"
+                    className="lineBottom line"
+                  />
+                </svg>
+                {isDropdownOpen && (
+                  <div className="menu">
+                    <div className="header-upper-links d-flex flex-column gap-3">
+                      <div>
+                        <Link
+                          to="/compare-products"
+                          className="d-flex align-items-center gap-2 text-white"
+                          onClick={closeDropdown}
+                        >
+                          <lord-icon
+                            className="img"
+                            src="https://cdn.lordicon.com/kkvxgpti.json"
+                            trigger="loop"
+                            delay="2000"
+                            colors="primary:#ffffff"
+                            style={{ width: "38px", height: "38px" }}
+                          ></lord-icon>
+                          <p className="mb-0">
+                            Search <br /> Products
+                          </p>
+                        </Link>
+                      </div>
+                      <div>
+                        <Link
+                          to="/compare-products"
+                          className="d-flex align-items-center gap-2 text-white"
+                          onClick={closeDropdown}
+                        >
+                          <lord-icon
+                            className="img"
+                            src="https://cdn.lordicon.com/rsbokaso.json"
+                            trigger="loop"
+                            delay="4000"
+                            colors="primary:#ffffff"
+                            style={{ width: "38px", height: "38px" }}
+                          ></lord-icon>
+                          <p className="mb-0">
+                            Compare <br /> Products
+                          </p>
+                        </Link>
+                      </div>
+                      <div>
+                        <Link
+                          to="/wishlist"
+                          className="d-flex align-items-center gap-2 text-white"
+                          onClick={closeDropdown}
+                        >
+                          <lord-icon
+                            className="img"
+                            src="https://cdn.lordicon.com/xyboiuok.json"
+                            trigger="loop"
+                            delay="4000"
+                            colors="primary:#ffffff"
+                            style={{ width: "38px", height: "38px" }}
+                          ></lord-icon>
+                          <p className="mb-0">
+                            Favourite <br /> Wishlist
+                          </p>
+                        </Link>
+                      </div>
+                      <div>
+                        <Link
+                          to="/login"
+                          className="d-flex align-items-center gap-2 text-white"
+                          onClick={closeDropdown}
+                        >
+                          <lord-icon
+                            src="https://cdn.lordicon.com/kthelypq.json"
+                            trigger="loop"
+                            delay="4000"
+                            colors="primary:#ffffff"
+                            style={{ width: "38px", height: "38px" }}
+                          ></lord-icon>
+                          <p className="mb-0">
+                            Log in <br /> My Account
+                          </p>
+                        </Link>
+                      </div>
+                      <div>
+                        <Link
+                          to="/cart"
+                          className="d-flex align-items-center gap-2 text-white"
+                          onClick={closeDropdown}
+                        >
+                          <lord-icon
+                            className="img"
+                            src="https://cdn.lordicon.com/mfmkufkr.json"
+                            trigger="loop"
+                            delay="4000"
+                            colors="primary:#ffffff"
+                            style={{ width: "38px", height: "38px" }}
+                          ></lord-icon>
+                          <div className="d-flex flex-column gap-1">
+                            <span className="badge bg-white  text-dark">0</span>
+                            <p className="mb-0">$ 500</p>
+                          </div>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="col-5 d-none d-md-block">
               <div className="input-group">
                 <input
                   type="text"
@@ -58,7 +204,7 @@ const Header = () => {
                   aria-label="Search Product Here..."
                   aria-describedby="basic-addon2"
                 />
-                <span className="input-group-text " id="basic-addon2">
+                <span className="input-group-text" id="basic-addon2">
                   <lord-icon
                     src="https://cdn.lordicon.com/kkvxgpti.json"
                     trigger="hover"

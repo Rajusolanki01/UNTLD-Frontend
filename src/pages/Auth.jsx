@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import AuthMobileLogin from "./AuthMobileLogin";
 import BreadCrum from "../components/BreadCrum";
 import Meta from "../components/Meta";
 import {
@@ -18,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
 import { loginUser, registerUser } from "../feature/user/userSlice";
 import LoadingCart from "../components/LoadingCart";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 const signupSchema = yup.object({
   firstname: yup.string().required("First Name is Required"),
@@ -105,9 +104,6 @@ const Auth = () => {
       <Container class1="login-wrapper home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12">
-            {/*   <div className="d-md-none">
-              <AuthMobileLogin />
-            </div> */}
             <div
               className={`container "d-noned-md-block" ${
                 isSignUp ? "active " : ""

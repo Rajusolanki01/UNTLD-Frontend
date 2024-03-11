@@ -201,16 +201,16 @@ const Checkout = () => {
           </div>
           <div className="col-5">
             <div className="border-bottom py-0">
-              <div className="d-flex flex-wrap align-items-center mb-2 gap-3">
-                <div className="w-75 side-card d-flex flex-wrap gap-4">
+              <div className="d-flex flex-wrap mb-2 gap-4">
+                <div className="w-75 side-card d-flex flex-wrap gap-4 mb-1">
                   <div className="side-card w-25 position-relative">
                     <span
-                      style={{ top: "-9%", right: "-5%" }}
+                      style={{ top: "-8%", right: "-5%" }}
                       className="badge bg-secondary text-white rounded-circle position-absolute"
                     >
                       1
                     </span>
-                    <div className="p-1 border bg-white">
+                    <div className="p-1 border bg-white ">
                       <img
                         src={Watch2}
                         alt="Product Img"
@@ -224,20 +224,20 @@ const Checkout = () => {
                     <p className="mb-0">M / White</p>
                   </div>
                 </div>
-                <div className="flex-grow-1">
+                <div className="d-flex flex-grow-1 mt-1">
                   <h5>₹90,500</h5>
                 </div>
               </div>
-              <div className="d-flex flex-wrap align-items-center mb-2 gap-3">
-                <div className="w-75 side-card d-flex flex-wrap gap-4">
+              <div className="d-flex flex-wrap mb-2 gap-4">
+                <div className="w-75 side-card d-flex flex-wrap gap-4 mb-1">
                   <div className="side-card w-25 position-relative">
                     <span
-                      style={{ top: "-9%", right: "-5%" }}
+                      style={{ top: "-8%", right: "-5%" }}
                       className="badge bg-secondary text-white rounded-circle position-absolute"
                     >
                       1
                     </span>
-                    <div className="p-1 border bg-white">
+                    <div className="p-1 border bg-white ">
                       <img
                         src={Watch2}
                         alt="Product Img"
@@ -251,7 +251,7 @@ const Checkout = () => {
                     <p className="mb-0">M / White</p>
                   </div>
                 </div>
-                <div className="flex-grow-1">
+                <div className="d-flex flex-grow-1 mt-1">
                   <h5>₹90,500</h5>
                 </div>
               </div>

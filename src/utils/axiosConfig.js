@@ -5,7 +5,7 @@ import {
   removeItem,
   setItem,
 } from "./localStoageManager";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 let baseURL = process.env.REACT_APP_SERVER_BASE_URL;
 

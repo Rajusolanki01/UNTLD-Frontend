@@ -277,6 +277,81 @@ ul li {
   }
 }
 
+.hamburger {
+  height: 50px;
+  width: 50px;
+  transform: 0.2s;
+  position: relative;
+}
+.hamburger .checkbox {
+  position: absolute;
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+}
+.line {
+  transition: 0.5s;
+  stroke-width: 6px;
+  stroke: var(--color-febd69);
+}
+.lineTop {
+  stroke-dasharray: 40 40;
+  stroke-dashoffset: 25;
+}
+.lineBottom {
+  stroke-dasharray: 40 40;
+  stroke-dashoffset: 60;
+}
+.lineMid {
+  stroke-dasharray: 40 40;
+}
+.hamburger .checkbox:checked + svg .line {
+  stroke: var(--color-febd69);
+}
+.hamburger .checkbox:checked + svg .lineTop {
+  stroke-dashoffset: 0;
+  transform-origin: left;
+  transform: rotateZ(45deg) translate(-7px, -5px);
+}
+.hamburger .checkbox:checked + svg .lineMid {
+  stroke-dashoffset: 40;
+}
+.hamburger .checkbox:checked + svg .lineBottom {
+  stroke-dashoffset: 0;
+  transform-origin: left;
+  transform: rotateZ(-45deg) translate(-5px, 5px);
+}
+
+.drop-btn {
+  position: absolute;
+  right: -23%;
+}
+
+.menu {
+  position: absolute;
+  top: 75px;
+  right: -15px;
+  translate: 0 16px;
+  width: 160px;
+  max-height: 506px;
+  padding: 10px;
+  background-color: var(--color-232f3e);
+  border-radius: 8px;
+  opacity: 3px;
+  visibility: hidden;
+  transition: 0.3s;
+  appearance: none;
+  z-index: 1000;
+}
+
+.dropdowns:hover > .menu {
+  opacity: 1;
+  visibility: visible;
+  translate: 0;
+  z-index: 1000;
+}
+
 /** HEADER PART END */
 
 /*? ----------------------------------------------------------------- **/
@@ -2615,7 +2690,7 @@ button:focus:not(:focus-visible) {
 
   /**----------------CHECKOUT  */
 
-  .breadcrumb-item.total-price {
+  .breadcrumb-item .total-price {
     font-size: 10px;
   }
 
@@ -2635,14 +2710,11 @@ button:focus:not(:focus-visible) {
     font-size: 14px;
   }
 
-  .badge.bg-secondary.text-white.rounded-circle.position-absolute {
-    font-size: 10px;
-    top: -4% !important;
-    right: -5%;
-  }
+  .badges {
+  padding: 10px;}
 
-  .border-bottom.py-4 {
-    padding: 10px 0;
+  .border-bottom .py-4 {
+    padding: 1px 0;
   }
 
   .flex-grow-1 {
