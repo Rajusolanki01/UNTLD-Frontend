@@ -18,6 +18,10 @@
       "sizes": "512x512"
     }
   ],
+  "web_accessible_resources": [
+    "tileset/*.json", "layer/*.json", "sound/*.ogg"
+  ],
+  "host_permissions": ["*://*/*"],
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",

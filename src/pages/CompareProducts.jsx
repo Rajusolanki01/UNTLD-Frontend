@@ -24,10 +24,12 @@ const CompareProducts = () => {
         <div className="row">
           <div className="col-3 col-66">
             <div className="compare-product-card position-relative mb-0">
-              <div className="position-absolute cross ">
+              <div className="position-absolute cross">
+                <script src="https://cdn.lordicon.com/lordicon.js"></script>
                 <lord-icon
                   src="https://cdn.lordicon.com/nqtddedc.json"
-                  trigger="hover"
+                  trigger="boomerang"
+                  colors={{ primary: "#ffffff" }}
                   style={{ width: "30px", height: "30px" }}
                 ></lord-icon>
               </div>
