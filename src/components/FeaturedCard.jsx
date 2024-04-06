@@ -1,10 +1,27 @@
-import React, { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
-import { ultraWatch, ultraWatch2 } from "../assets/assets";
+import { useDispatch, useSelector } from "react-redux";
+import { addProductWishlist } from "../feature/product/productSlice";
+import LoadingCart from "./LoadingCart";
 
-const FeaturedCard = ({ grid, data }) => {
+const FeaturedCard = ({ grid, featuredData }) => {
   let location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const productState = useSelector((state) => state.product);
+  const { isLoading } = productState;
+  const [wishlist, setWishlist] = useState(() => {
+    const storedWishlist = localStorage.getItem("wishlist");
+    return storedWishlist ? JSON.parse(storedWishlist) : {};
+  });
+
+  const addToWishlist = (id) => {
+    const updatedWishlist = { ...wishlist, [id]: !wishlist[id] };
+    setWishlist(updatedWishlist);
+    localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+    dispatch(addProductWishlist(id));
+  };
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -16,101 +33,130 @@ const FeaturedCard = ({ grid, data }) => {
       document.body.removeChild(script);
     };
   }, []);
+
+  if (isLoading) {
+    return (
+      <div className="LoadingBar2 row">
+        <LoadingCart />
+      </div>
+    );
+  }
   return (
     <>
-      {data &&
-        data.map((item, index) => {
-          return (
-            <div
-              key={index}
-              className={`${
-                location.pathname === "/store" ? `gr-${grid}` : "col-3"
-              } `}
+      <div
+        className={`${
+          location.pathname === "/store" ? `gr-${grid}` : "col-3"
+        } `}
+      >
+        <div className="product-card position-relative">
+          <div className="wishlist-icons position-absolute">
+            <button
+              className="border-0 bg-transparent"
+              onClick={() => addToWishlist(featuredData?._id)}
             >
-              <div className="product-card position-relative">
-                <div className="wishlist-icons position-absolute">
-                  <button className="border-0 bg-transparent">
-                    <lord-icon
-                      className="img"
-                      src="https://cdn.lordicon.com/xyboiuok.json"
-                      trigger="click"
-                      colors="primary:#1c1c1b"
-                      style={{ width: "27px", height: "27px" }}
-                    ></lord-icon>
-                  </button>
-                </div>
-                <div>
-                  <div>
-                    <div className="product-image">
-                      <img
-                        src={ultraWatch}
-                        alt="Watch"
-                        className="mb-4 mx-5 img-fluid"
-                      />{" "}
-                      <img
-                        src={ultraWatch2}
-                        alt="Watch"
-                        className="mb-4 mx-5 img-fluid"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="product-details">
-                  <h6 className="brand">{item.brand}</h6>
-                  <h5 className="product-title">{item.title}</h5>
-                  <ReactStars
-                    count={parseInt(item.totalrating)}
-                    size={23}
-                    value={parseInt(item.totalrating)}
-                    edit={false}
-                    activeColor="#febd69"
-                  />
-                  <p
-                    className={`description ${
-                      grid === 12 ? "d-block" : "d-none"
-                    }`}
-                  >
-                    {item.description}
-                  </p>
-                  <p className="price">₹ {item.price}/-</p>
-                </div>
-                <div className="action-bar position-absolute">
-                  <div className="d-flex flex-column gap-1">
-                    <button className="border-0 bg-transparent">
-                      <lord-icon
-                        className="img"
-                        src="https://cdn.lordicon.com/mfmkufkr.json"
-                        trigger="click"
-                        colors="primary:#1c1c1b"
-                        style={{ width: "27px", height: "27px" }}
-                      ></lord-icon>{" "}
-                    </button>
-                    <div className="border-0 bg-transparent">
-                      <Link to="/product/:id">
-                        <lord-icon
-                          src="https://cdn.lordicon.com/vfczflna.json"
-                          trigger="click"
-                          stroke="bold"
-                          colors="primary:#121331,secondary:#000000"
-                          style={{ width: "24px", height: "25px" }}
-                        ></lord-icon>
-                      </Link>
-                    </div>
-                    <div className="border-0 bg-transparent">
-                      <lord-icon
-                        className="img"
-                        src="https://cdn.lordicon.com/rsbokaso.json"
-                        trigger="click"
-                        colors="primary:#1c1c1b"
-                        style={{ width: "27px", height: "27px" }}
-                      ></lord-icon>
-                    </div>
-                  </div>
-                </div>
+              <lord-icon
+                className="img"
+                src={
+                  wishlist[featuredData?._id]
+                    ? "https://cdn.lordicon.com/xyboiuok.json"
+                    : "https://cdn.lordicon.com/xyboiuok.json"
+                }
+                trigger="click"
+                colors={
+                  wishlist[featuredData?._id]
+                    ? "primary:#e83a30"
+                    : "primary:#1c1c1b"
+                }
+                style={{ width: "27px", height: "27px" }}
+              ></lord-icon>
+            </button>
+          </div>
+          <div>
+            <div>
+              <div className="product-image">
+                <img
+                  src={featuredData?.images[0]?.url}
+                  alt="Watch"
+                  className="mb-4 img-fluid prod-img"
+                  onClick={() => navigate(`/product/${featuredData?._id}`)}
+                />{" "}
+                <img
+                  src={featuredData?.images[1]?.url}
+                  alt="Watch"
+                  className="mb-4 img-fluid prod-img"
+                  onClick={() => navigate(`/product/${featuredData?._id}`)}
+                />
               </div>
             </div>
-          );
-        })}
+          </div>
+          <div className="product-details">
+            <h6 className="brand">{featuredData?.brand}</h6>
+            <h5 className="product-title">
+              {featuredData?.title.substr(0, 25)}
+            </h5>
+            <ReactStars
+              count={5}
+              size={23}
+              value={
+                !isNaN(parseFloat(featuredData?.totalrating))
+                  ? parseFloat(featuredData?.totalrating)
+                  : 0
+              }
+              edit={false}
+              activeColor="#febd69"
+            />
+
+            <div
+              className={`description ${grid === 12 ? "d-block" : "d-none"}`}
+            >
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: featuredData?.description,
+                }}
+              ></p>
+            </div>
+            <p className="price mt-2">
+              ₹ {parseFloat(featuredData?.price).toLocaleString("en-IN")} /-
+            </p>
+          </div>
+          <div className="action-bar position-absolute">
+            <div className="d-flex flex-column gap-1 mb-0">
+              <button className="border-0 bg-transparent">
+                <lord-icon
+                  className="img"
+                  src="https://cdn.lordicon.com/mfmkufkr.json"
+                  trigger="click"
+                  colors="primary:#1c1c1b"
+                  style={{ width: "27px", height: "27px" }}
+                ></lord-icon>{" "}
+              </button>
+              <div className="border-0 bg-transparent product-eye">
+                <Link to={`/product/${featuredData?._id}`}>
+                  <lord-icon
+                    className="img"
+                    src="https://cdn.lordicon.com/vfczflna.json"
+                    trigger="click"
+                    stroke="bold"
+                    colors="primary:#121331,secondary:#000000"
+                    style={{ width: "24px", height: "24px" }}
+                  ></lord-icon>
+                </Link>
+              </div>
+              <div className="border-0 bg-transparent mt-0">
+                <button className="border-0 bg-transparent">
+                  <lord-icon
+                    className="img"
+                    src="https://cdn.lordicon.com/rsbokaso.json"
+                    trigger="click"
+                    colors="primary:#1c1c1b"
+                    style={{ width: "27px", height: "27px" }}
+                  ></lord-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

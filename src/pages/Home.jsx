@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -28,8 +28,36 @@ import {
 } from "../assets/assets";
 import Container from "../components/Container";
 import { services, brandImages } from "../utils/Data";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllblogs } from "../feature/blog/blogSlice";
+import LoadingCart from "../components/LoadingCart";
+import { getAllProducts } from "../feature/product/productSlice";
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const blogState = useSelector((state) => state.blog.blogs);
+  const loadingState = useSelector((state) => state.blog);
+  const productState = useSelector((state) => state.product.product);
+  const { isLoading } = loadingState;
+
+  const slicedBlogState = blogState.slice(0, 4);
+  const popularProductState = productState.slice(0, 4);
+  const featuredProductState = productState.slice(0, 4);
+  const specialProductState = productState.slice(0, 4);
+
+  useEffect(() => {
+    dispatch(getAllblogs());
+    dispatch(getAllProducts());
+  }, [dispatch]);
+
+  if (isLoading) {
+    return (
+      <div className="LoadingBar">
+        <LoadingCart />
+      </div>
+    );
+  }
+
   const setting = {
     infinite: true,
     speed: 500,
@@ -75,7 +103,7 @@ const Home = () => {
             <div className="services d-flex flex-wrap align-items-center justify-content-between">
               {services.map((item, index) => (
                 <div
-                  key={item.title}
+                  key={index}
                   className="service-item d-flex  align-items-center gap-2"
                 >
                   <img src={item.image} alt="Services" />
@@ -174,10 +202,21 @@ const Home = () => {
           <div className="col-12">
             <h3 className="section-heading">Featured Collection</h3>
           </div>
-          <FeaturedCard />
-          <FeaturedCard />
-          <FeaturedCard />
-          <FeaturedCard />
+          <div className="row">
+            {productState &&
+              productState?.map((item, index) => {
+                if (item?.tags === "featured") {
+                  return (
+                    <FeaturedCard
+                      key={index}
+                      index={index}
+                      featuredData={item}
+                    />
+                  );
+                }
+                return null;
+              })}
+          </div>
         </div>
       </Container>
       <Container class1="famous-wraper home-wrapper-2 py-4">
@@ -242,10 +281,17 @@ const Home = () => {
           </div>
         </div>
         <div className="row">
-          <SpecialProduct />
-          <SpecialProduct />
-          <SpecialProduct />
-          <SpecialProduct />
+          {specialProductState &&
+            specialProductState?.map((item, index) => {
+              if (item?.tags === "special") {
+                return (
+                  <div className="col-lg-6 col-md-6 col-sm-12 mb-3" key={index}>
+                    <SpecialProduct productData={item} />
+                  </div>
+                );
+              }
+              return null;
+            })}
         </div>
       </Container>
       <Container class1="popular-wrapper home-wrapper-2 py-4">
@@ -255,10 +301,15 @@ const Home = () => {
           </div>
         </div>
         <div className="row">
-          <FeaturedCard />
-          <FeaturedCard />
-          <FeaturedCard />
-          <FeaturedCard />
+          {productState &&
+            productState?.map((item, index) => {
+              if (item?.tags === "popular") {
+                return (
+                  <FeaturedCard key={index} index={index} featuredData={item} />
+                );
+              }
+              return null;
+            })}
         </div>
       </Container>
       <Container class1="marquee-wrapper home-wrapper-2">
@@ -285,18 +336,14 @@ const Home = () => {
           </div>
         </div>
         <div className="row">
-          <div className="col-lg-3 col-md-6 col-sm-3">
-            <BlogCard />
-          </div>
-          <div className="col-lg-3 col-md-6 col-sm-3 ">
-            <BlogCard />
-          </div>
-          <div className="col-lg-3 col-md-6 col-sm-3">
-            <BlogCard />
-          </div>
-          <div className="col-lg-3 col-md-6 col-sm-3">
-            <BlogCard />
-          </div>
+          {slicedBlogState &&
+            slicedBlogState.map((item, index) => {
+              return (
+                <div className="col-lg-3 col-md-6 col-sm-3" key={index}>
+                  <BlogCard blogData={item} />
+                </div>
+              );
+            })}
         </div>
       </Container>
     </>

@@ -1,10 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BreadCrum from "../components/BreadCrum";
 import BlogCard from "../components/BlogCard";
 import Meta from "../components/Meta";
 import Container from "../components/Container";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllblogs } from "../feature/blog/blogSlice";
+import LoadingCart from "../components/LoadingCart";
 
 const Blog = () => {
+  const dispatch = useDispatch();
+  const loadingState = useSelector((state) => state.blog);
+  const blogState = useSelector((state) => state.blog.blogs);
+  const { isLoading } = loadingState;
+
+  useEffect(() => {
+    dispatch(getAllblogs());
+  }, [dispatch]);
+
+  if (isLoading) {
+    return (
+      <div className="LoadingBar">
+        <LoadingCart />
+      </div>
+    );
+  }
+
   return (
     <>
       <Meta title={"Blogs"} />
@@ -26,24 +46,16 @@ const Blog = () => {
           </div>
           <div className="col-lg-9 col-md-8 col-sm-6">
             <div className="row">
-              <div className="col-lg-6 col-md-6 col-sm-12 mb-4">
-                <BlogCard />
-              </div>
-              <div className="col-lg-6 col-md-6 col-sm-12 mb-4">
-                <BlogCard />
-              </div>
-              <div className="col-lg-6 col-md-6 col-sm-12 mb-4">
-                <BlogCard />
-              </div>
-              <div className="col-lg-6 col-md-6 col-sm-12 mb-4">
-                <BlogCard />
-              </div>
-              <div className="col-lg-6 col-md-6 col-sm-12 mb-4">
-                <BlogCard />
-              </div>
-              <div className="col-lg-6 col-md-6 col-sm-12 mb-4">
-                <BlogCard />
-              </div>
+              {blogState &&
+                blogState.map((item, index) => {
+                 
+                    return (
+                      <div className="col-lg-6 col-md-6 col-sm-12" key={index}>
+                        <BlogCard blogData={item} />
+                      </div>
+                    );
+                  
+                })}
             </div>
           </div>
         </div>

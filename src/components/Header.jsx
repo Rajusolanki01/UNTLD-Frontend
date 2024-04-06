@@ -26,6 +26,35 @@ const Header = () => {
     setIsCheckboxChecked(false);
   };
 
+  // useEffect(() => {
+  //   const disableRightClick = (event) => {
+  //     event.preventDefault();
+  //   };
+
+  //   window.addEventListener("contextmenu", disableRightClick);
+
+  //   return () => {
+  //     window.removeEventListener("contextmenu", disableRightClick);
+  //   };
+  // }, []);
+
+  // useEffect(() => {
+  //   const handleKeyDown = (event) => {
+  //     if (
+  //       event.ctrlKey &&
+  //       (event.keyCode === 67 || event.keyCode === 86) //? Ctrl + C / Ctrl + V
+  //     ) {
+  //       event.preventDefault();
+  //     }
+  //   };
+
+  //   window.addEventListener("keydown", handleKeyDown);
+
+  //   return () => {
+  //     window.removeEventListener("keydown", handleKeyDown);
+  //   };
+  // }, []);
+
   return (
     <>
       <header className="header-top-strip py-2">

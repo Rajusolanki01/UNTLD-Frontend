@@ -1,12 +1,24 @@
 import React, { useEffect } from "react";
 import BreadCrum from "../components/BreadCrum";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
 import Meta from "../components/Meta";
-import { Blog } from "../assets/assets";
 import Container from "../components/Container";
+import { useDispatch, useSelector } from "react-redux";
+import { getSingleblog } from "../feature/blog/blogSlice";
+import LoadingCart from "../components/LoadingCart";
+import moment from "moment";
 
 const SingleBlog = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const singleBlogState = useSelector((state) => state.blog.singleBlog);
+  const loadingState = useSelector((state) => state.blog.isLoading);
+
+  useEffect(() => {
+    dispatch(getSingleblog(id));
+  }, [dispatch, id]);
+
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://cdn.lordicon.com/lordicon.js";
@@ -17,10 +29,24 @@ const SingleBlog = () => {
       document.body.removeChild(script);
     };
   }, []);
+
+  if (loadingState) {
+    return (
+      <div className="LoadingBar2 row">
+        <LoadingCart />
+      </div>
+    );
+  }
+
+  const imageUrl =
+    singleBlogState.images && singleBlogState.images.length > 0
+      ? singleBlogState.images[0].url
+      : "";
+
   return (
     <>
-      <Meta title={"Dynamic Blog Name"} />
-      <BreadCrum title="Dynamic Blog Name" />
+      <Meta title={singleBlogState?.title} />
+      <BreadCrum title={singleBlogState?.title} />
       <Container class1="blog-wrapper home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12">
@@ -29,20 +55,24 @@ const SingleBlog = () => {
                 <BiArrowBack style={{ fontSize: "20px" }} />
                 Go Back to Blogs{" "}
               </Link>
-              <h3 className="title mt-2">
-                A Beautiful Sunday Morning renaissance
-              </h3>
-              <img src={Blog} className="img-fluid w-100 my-4" alt="Blog" />
-              <p>
-                Under the canvas of the waking sky, Nature's symphony begins to
-                fly. Dew-kissed petals bloom with delight, As morning whispers
-                secrets to the night. A gentle breeze, a tranquil hush, Through
-                rustling leaves, it starts to brush. The earth adorned in a
-                soft, verdant lace, A dance of colors, an enchanting embrace.
-                The sun ascends with a radiant smile, Gilding landscapes mile by
-                mile. A tranquil river mirrors the sun's descent, In its waters,
-                a world of dreams is sent.
-              </p>
+              <div className="d-flex justify-content-between align-items-center">
+                <h3 className="title mt-2">{singleBlogState?.title}</h3>
+                <p className="mb-0">
+                  {moment(singleBlogState?.createdAt).format(
+                    "MMMM Do YYYY, h:mm:ss a"
+                  )}
+                </p>
+              </div>
+              <img
+                src={imageUrl}
+                className="img-fluid w-100 my-4"
+                alt={singleBlogState?.title}
+              />
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: singleBlogState?.description,
+                }}
+              ></p>
             </div>
           </div>
         </div>

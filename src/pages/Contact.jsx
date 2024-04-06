@@ -6,8 +6,34 @@ import { IoIosMail } from "react-icons/io";
 import { IoInformationCircleSharp } from "react-icons/io5";
 import Meta from "../components/Meta";
 import Container from "../components/Container";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import CustomsInput from "../components/CustomsInput";
+import { useDispatch } from "react-redux";
+import { contactEnquiry } from "../feature/contact/contactSlice";
+
+const contactSchema = yup.object({
+  name: yup.string().required("Name is Required"),
+  email: yup.string().required("Email is Required"),
+  mobile: yup.string().required("Mobile Number Should be Valid"),
+  comment: yup.string().required("Contact Comment is Required"),
+});
 
 const Contact = () => {
+  const dispatch = useDispatch();
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      mobile: "",
+      comment: "",
+    },
+    validationSchema: contactSchema,
+    onSubmit: async (values) => {
+      dispatch(contactEnquiry(values));
+      formik.resetForm();
+    },
+  });
   return (
     <>
       <Meta title={"Contact Us"} />
@@ -28,40 +54,68 @@ const Contact = () => {
             <div className="contact-inner-wrapper d-flex justify-content-between">
               <div>
                 <h4 className="contact-title mb-4">Contact</h4>
-                <form action="" className="d-flex flex-column gap-3">
+                <form
+                  action=""
+                  onSubmit={formik.handleSubmit}
+                  className="d-flex flex-column gap-3"
+                >
                   <div>
-                    <input
+                    <CustomsInput
                       type="text"
-                      className="form-control"
+                      name="name"
                       placeholder="Name"
+                      value={formik.values.name}
+                      onChange={formik.handleChange("name")}
+                      onBlur={formik.handleBlur("name")}
                     />
+                    <div className="error my-2 mb-0">
+                      {formik.touched.name && formik.errors.name}
+                    </div>
                   </div>
                   <div>
-                    <input
+                    <CustomsInput
                       type="email"
-                      className="form-control"
+                      name="email"
                       placeholder="Email"
+                      value={formik.values.email}
+                      onChange={formik.handleChange("email")}
+                      onBlur={formik.handleBlur("email")}
                     />
+                    <div className="error my-2 mb-0">
+                      {formik.touched.email && formik.errors.email}
+                    </div>
                   </div>
                   <div>
-                    <input
+                    <CustomsInput
                       type="tel"
-                      className="form-control"
+                      name="mobile"
                       placeholder="Mobile Number"
+                      value={formik.values.mobile}
+                      onChange={formik.handleChange("mobile")}
+                      onBlur={formik.handleBlur("mobile")}
                     />
+                    <div className="error my-2 mb-0">
+                      {formik.touched.mobile && formik.errors.mobile}
+                    </div>
                   </div>
                   <div>
                     <textarea
-                      name=""
+                      name="comment"
                       id=""
                       className="w-100 form-control"
                       cols="4"
                       rows="3"
                       placeholder="Comments"
+                      value={formik.values.comment}
+                      onChange={formik.handleChange("comment")}
+                      onBlur={formik.handleBlur("comment")}
                     ></textarea>
+                    <div className="error my-2 mb-0">
+                      {formik.touched.comment && formik.errors.comment}
+                    </div>
                   </div>
                   <div>
-                    <button className="send-button">
+                    <button className="send-button" type="submit">
                       <div className="svg-wrapper-1">
                         <div className="svg-wrapper">
                           <svg

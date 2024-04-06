@@ -27,8 +27,50 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const getUserProductWishlist = createAsyncThunk(
+  "auth/wishlist",
+  async (thunkAPI) => {
+    try {
+      return await authService.getUserWishlist();
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response.data.message || error.message
+      );
+    }
+  }
+);
+
+export const getASingleUser = createAsyncThunk(
+  "auth/user",
+  async (userId, thunkAPI) => {
+    try {
+      return await authService.getSingleUser(userId);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response.data.message || error.message
+      );
+    }
+  }
+);
+
+export const productAddToCart = createAsyncThunk(
+  "auth/add-to-cart",
+  async (cartData, thunkAPI) => {
+    try {
+      return await authService.addToCart(cartData);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response.data.message || error.message
+      );
+    }
+  }
+);
+
 const authState = {
-  user: "",
+  user: {},
+  wishlist: {},
+  singleUser: {},
+  cart: {},
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -66,6 +108,51 @@ export const authSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.ismessage = action.error;
+      })
+      .addCase(getUserProductWishlist.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getUserProductWishlist.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.wishlist = action.payload;
+      })
+      .addCase(getUserProductWishlist.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.ismessage = action.error;
+      })
+      .addCase(getASingleUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getASingleUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.singleUser = action.payload;
+      })
+      .addCase(getASingleUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.ismessage = action.error;
+      })
+      .addCase(productAddToCart.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(productAddToCart.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.cart = action.payload;
+      })
+      .addCase(productAddToCart.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;

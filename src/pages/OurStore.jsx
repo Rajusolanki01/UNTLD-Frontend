@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import BreadCrum from "../components/BreadCrum";
 import ReactStars from "react-rating-stars-component";
 import FeaturedCard from "../components/FeaturedCard";
 import Color from "../components/Color";
 import Meta from "../components/Meta";
-import { Headphone, gr, gr2, gr3, gr4 } from "../assets/assets";
+import { gr, gr2, gr3, gr4 } from "../assets/assets";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../feature/product/productSlice";
@@ -14,13 +14,20 @@ const OurStore = () => {
   const dispatch = useDispatch();
   const productState = useSelector((state) => state.product?.product);
 
-  const getProduct = () => {
+  const getProduct = useCallback(() => {
     dispatch(getAllProducts());
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     getProduct();
-  }, []);
+  }, [getProduct]);
+
+  const uniqueCategories = [
+    ...new Set(productState?.flatMap((item) => item.category)),
+  ];
+
+  const uniqueTags = [...new Set(productState?.flatMap((item) => item.tags))];
+
   return (
     <>
       <Meta title={"Our Store"} />
@@ -31,11 +38,11 @@ const OurStore = () => {
             <div className="filter-card mb-3">
               <h3 className="filter-title">Shop by Categories</h3>
               <div>
-                {productState &&
-                  productState?.map((item, index) => {
+                {uniqueCategories &&
+                  uniqueCategories?.map((category, index) => {
                     return (
                       <ul key={index} className="ps-0 mb-1">
-                        <li>{item.category}</li>
+                        <li>{category}</li>
                       </ul>
                     );
                   })}
@@ -124,21 +131,16 @@ const OurStore = () => {
             <div className="filter-card mb-3">
               <h3 className="filter-title">Products Tags</h3>
               <div role="button">
-                {productState &&
-                  productState?.map((item, index) => {
+                {uniqueTags &&
+                  uniqueTags?.map((tags, index) => {
                     return (
                       <div
                         key={index}
                         className="product-tags d-flex flex-wrap align-items-center gap-3"
                       >
-                        {item.tags.map((tag, tagIndex) => (
-                          <span
-                            key={tagIndex}
-                            className="badge bg-light text-secondary rounded-1 py-2 px-3 m-1"
-                          >
-                            {tag}
-                          </span>
-                        ))}
+                        <span className="badge bg-light text-secondary rounded-1 py-2 px-3 m-1">
+                          {tags}
+                        </span>
                       </div>
                     );
                   })}
@@ -157,7 +159,7 @@ const OurStore = () => {
                         {" "}
                         <div className="w-25">
                           <img
-                            src={Headphone}
+                            src={item?.images[0]?.url}
                             alt="Watch"
                             className="img-fluid"
                           />
@@ -171,7 +173,9 @@ const OurStore = () => {
                             edit={false}
                             activeColor="#febd69"
                           />
-                          <p className="price">₹{item.price}/-</p>
+                          <p className="price">
+                            ₹{parseFloat(item.price).toLocaleString("en-IN")} /-
+                          </p>
                         </div>
                       </div>
                     );
@@ -242,7 +246,17 @@ const OurStore = () => {
             </div>
             <div className="product-list pb-5">
               <div className="d-flex gap-3 flex-wrap">
-                <FeaturedCard data={productState} grid={grid} />
+                {productState &&
+                  productState?.map((item, index) => {
+                    return (
+                      <FeaturedCard
+                        key={index}
+                        index={index}
+                        featuredData={item}
+                        grid={grid}
+                      />
+                    );
+                  })}
               </div>
             </div>
           </div>

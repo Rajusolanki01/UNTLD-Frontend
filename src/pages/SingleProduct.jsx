@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import BreadCrum from "../components/BreadCrum";
 import Meta from "../components/Meta";
 import FeaturedCard from "../components/FeaturedCard";
 import ReactStars from "react-rating-stars-component";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ReactImageZoom from "react-image-zoom";
 import Color from "../components/Color";
 import Accordion from "react-bootstrap/Accordion";
@@ -13,24 +13,64 @@ import { RxDimensions } from "react-icons/rx";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { IoIosLink } from "react-icons/io";
 import Container from "../components/Container";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addProductWishlist,
+  getASingleProducts,
+} from "../feature/product/productSlice";
+import LoadingCart from "../components/LoadingCart";
+import { getASingleUser, productAddToCart } from "../feature/user/userSlice";
+import { KEY_USER_ID, getItem } from "../utils/localStoageManager";
 
 const SingleProduct = () => {
-  const props = {
-    width: 400,
-    height: 500,
-    zoomWidth: 650,
-    img: "https://www.apple.com/newsroom/images/2023/09/apple-introduces-the-advanced-new-apple-watch-series-9/article/Apple-Watch-S9-hero-230912_Full-Bleed-Image.jpg.large_2x.jpg",
-  };
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const SingleProductState = useSelector(
+    (state) => state.product.singleProduct
+  );
+  const loadingState = useSelector((state) => state.product.isLoading);
   const [orderedProduct, setOrderedProduct] = useState(true);
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
   const [zoomEnabled, setZoomEnabled] = useState(false);
+  const [wishlist, setWishlist] = useState(() => {
+    const storedWishlist = localStorage.getItem("wishlist");
+    return storedWishlist ? JSON.parse(storedWishlist) : {};
+  });
+  const { ratings } = SingleProductState;
+  // const userId = getItem(KEY_USER_ID);
+  // console.log(userId);
+
+  const addToWishlist = (id) => {
+    const updatedWishlist = { ...wishlist, [id]: !wishlist[id] };
+    setWishlist(updatedWishlist);
+    localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+    dispatch(addProductWishlist(id));
+  };
+
+  const getSingleProduct = useCallback(() => {
+    dispatch(getASingleProducts(id));
+  }, [dispatch, id]);
+
+  const addToProductInCart = () => {
+    // dispatch(productAddToCart());
+    alert("Add T ");
+  };
+
+  // const getSingleUser = useCallback(() => {
+  //   dispatch(getASingleUser(id));
+  // }, [dispatch, id]);
+
+  useEffect(() => {
+    getSingleProduct();
+    // getSingleUser();
+    window.scrollTo(0, 0);
+  }, [getSingleProduct]);
 
   const handleCopyClick = async () => {
     try {
-      await navigator.clipboard.writeText(
-        "https://www.apple.com/newsroom/images/2023/09/apple-introduces-the-advanced-new-apple-watch-series-9/article/Apple-Watch-S9-hero-230912_Full-Bleed-Image.jpg.large_2x.jpg"
-      );
+      await navigator.clipboard.writeText(window.location.href);
       setCopied(true);
       setTimeout(() => {
         setCopied(false);
@@ -59,6 +99,33 @@ const SingleProduct = () => {
     };
   }, []);
 
+  if (loadingState) {
+    return (
+      <div className="LoadingBar">
+        <LoadingCart />
+      </div>
+    );
+  }
+
+  const imageUrl =
+    SingleProductState.images && SingleProductState.images.length > 0
+      ? SingleProductState.images[0].url && SingleProductState.images[0].url
+      : "";
+
+  const imageUrl1 =
+    SingleProductState.images && SingleProductState.images.length > 1
+      ? SingleProductState.images[1].url
+      : "";
+
+  const props = {
+    width: 400,
+    height: 500,
+    zoomWidth: 1950,
+    img:
+      selectedImage ||
+      imageUrl ||
+      "https://www.apple.com/newsroom/images/2023/09/apple-introduces-the-advanced-new-apple-watch-series-9/article/Apple-Watch-S9-hero-230912_Full-Bleed-Image.jpg.large_2x.jpg",
+  };
   return (
     <>
       <Meta title={"Product Name"} />
@@ -84,30 +151,34 @@ const SingleProduct = () => {
             <div className="other-product-images d-flex flex-wrap gap-3">
               <div>
                 <img
-                  src="https://www.apple.com/newsroom/images/2023/09/apple-introduces-the-advanced-new-apple-watch-series-9/article/Apple-Watch-S9-hero-230912_Full-Bleed-Image.jpg.large_2x.jpg"
+                  src={imageUrl}
                   className="img-fluid"
-                  alt=""
+                  alt={SingleProductState?.title}
+                  onClick={() => setSelectedImage(imageUrl)}
                 />
               </div>
               <div>
                 <img
-                  src="https://www.apple.com/newsroom/images/2023/09/apple-introduces-the-advanced-new-apple-watch-series-9/article/Apple-Watch-S9-hero-230912_Full-Bleed-Image.jpg.large_2x.jpg"
+                  src={imageUrl1}
                   className="img-fluid"
-                  alt=""
+                  alt={SingleProductState?.title}
+                  onClick={() => setSelectedImage(imageUrl1)}
                 />
               </div>
               <div>
                 <img
-                  src="https://www.apple.com/newsroom/images/2023/09/apple-introduces-the-advanced-new-apple-watch-series-9/article/Apple-Watch-S9-hero-230912_Full-Bleed-Image.jpg.large_2x.jpg"
+                  src={imageUrl1}
                   className="img-fluid"
-                  alt=""
+                  alt={SingleProductState?.title}
+                  onClick={() => setSelectedImage(imageUrl1)}
                 />
               </div>
               <div>
                 <img
-                  src="https://www.apple.com/newsroom/images/2023/09/apple-introduces-the-advanced-new-apple-watch-series-9/article/Apple-Watch-S9-hero-230912_Full-Bleed-Image.jpg.large_2x.jpg"
+                  src={imageUrl}
                   className="img-fluid"
-                  alt=""
+                  alt={SingleProductState?.title}
+                  onClick={() => setSelectedImage(imageUrl)}
                 />
               </div>
             </div>
@@ -115,15 +186,25 @@ const SingleProduct = () => {
           <div className="col-6">
             <div className="main-product-details">
               <div className="border-bottom">
-                <h3 className="title">Apple Watch Series 9 Ultra</h3>
+                <h3 className="title">{SingleProductState?.title}</h3>
               </div>
               <div className="border-bottom py-2">
-                <p className="price mb-1">₹90,000</p>
+                <p className="price mb-1">
+                  ₹
+                  {parseFloat(SingleProductState?.price).toLocaleString(
+                    "en-IN"
+                  )}
+                  /-
+                </p>
                 <div className="d-flex align-items-center  gap-2">
                   <ReactStars
                     count={5}
                     size={23}
-                    value={3}
+                    value={
+                      !isNaN(parseFloat(SingleProductState?.totalrating))
+                        ? parseFloat(SingleProductState?.totalrating)
+                        : 0
+                    }
                     edit={false}
                     activeColor="#febd69"
                   />
@@ -140,15 +221,15 @@ const SingleProduct = () => {
                 </div>
                 <div className="d-flex gap-3 align-items-center my-2">
                   <h3 className="product-heading">Brand :</h3>
-                  <p className="product-data">Apple</p>
+                  <p className="product-data">{SingleProductState?.brand}</p>
                 </div>
                 <div className="d-flex gap-3 align-items-center my-2">
                   <h3 className="product-heading">Category :</h3>
-                  <p className="product-data">Watch</p>
+                  <p className="product-data">{SingleProductState?.category}</p>
                 </div>
                 <div className="d-flex gap-3 align-items-center my-2">
                   <h3 className="product-heading">Tags :</h3>
-                  <p className="product-data">#Series9 #AppleUltraWatch</p>
+                  <p className="product-data">#{SingleProductState.tags}</p>
                 </div>
                 <div className="d-flex gap-3 align-items-center my-2">
                   <h3 className="product-heading">Availability :</h3>
@@ -165,7 +246,7 @@ const SingleProduct = () => {
                   </div>
                 </div>
                 <div className="d-flex gap-3 flex-column mt-2 mb-3">
-                  <h3 className="product-heading">Color </h3>
+                  <h3 className="product-heading">Color</h3>
                   <Color />
                 </div>
                 <div className="d-flex align-items-center gap-3 flex-row mt-2">
@@ -183,22 +264,28 @@ const SingleProduct = () => {
                     />
                   </div>
                   <div className="d-flex align-items-center gap-4 ms-4">
-                    <Link to="/">
-                      <button className="CartBtn">
-                        <span className="IconContainer">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            height="1em"
-                            viewBox="0 0 576 512"
-                            fill="rgb(17, 17, 17)"
-                            className="cart"
-                          >
-                            <path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path>
-                          </svg>
-                        </span>
-                        <p className="cart-text">Add to Cart</p>
-                      </button>
-                    </Link>
+                    <button
+                      className="CartBtn"
+                      type="button"
+                      data-bs-toggle="modal"
+                      data-bs-target="#staticBackdrop"
+                      onClick={() => {
+                        addToProductInCart();
+                      }}
+                    >
+                      <span className="IconContainer">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          height="1em"
+                          viewBox="0 0 576 512"
+                          fill="rgb(17, 17, 17)"
+                          className="cart"
+                        >
+                          <path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path>
+                        </svg>
+                      </span>
+                      <p className="cart-text">Add to Cart</p>
+                    </button>
                     <Link to="/">
                       <div
                         data-tooltip="Price:- ₹90,000"
@@ -224,23 +311,31 @@ const SingleProduct = () => {
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-3 mt-4">
-                  <Link
-                    to="/wishlist"
-                    className="d-flex align-items-center gap-2"
+                  <button
+                    onClick={() => addToWishlist(SingleProductState?._id)}
+                    className="d-flex align-items-center gap-2 border-0 bg-transparent"
                   >
                     <lord-icon
-                      className=""
-                      src="https://cdn.lordicon.com/xyboiuok.json"
-                      trigger="hover"
-                      colors="primary:#00000"
-                      style={{ width: "25px", height: "25px" }}
+                      className="img"
+                      src={
+                        wishlist[SingleProductState?._id]
+                          ? "https://cdn.lordicon.com/xyboiuok.json"
+                          : "https://cdn.lordicon.com/xyboiuok.json"
+                      }
+                      trigger="click"
+                      colors={
+                        wishlist[SingleProductState?._id]
+                          ? "primary:#e83a30"
+                          : "primary:#1c1c1b"
+                      }
+                      style={{ width: "27px", height: "27px" }}
                     ></lord-icon>
                     Add To Wishlist
-                  </Link>
+                  </button>
 
-                  <Link
-                    to="/compare-products"
-                    className="d-flex align-items-center gap-2"
+                  <button
+                    to="/wishlist"
+                    className="d-flex align-items-center gap-2 border-0 bg-transparent"
                   >
                     <lord-icon
                       className="img"
@@ -250,7 +345,7 @@ const SingleProduct = () => {
                       style={{ width: "25px", height: "25px" }}
                     ></lord-icon>
                     Add To Compare
-                  </Link>
+                  </button>
                 </div>
                 <div className="mt-4">
                   <Accordion>
@@ -361,7 +456,10 @@ const SingleProduct = () => {
                         className="d-flex align-items-center gap-3 py-3"
                       >
                         Click This Button{" "}
-                        <div class="icon-conatiner" onClick={handleCopyClick}>
+                        <div
+                          className="icon-conatiner"
+                          onClick={handleCopyClick}
+                        >
                           <svg
                             width="19px"
                             height="21px"
@@ -374,9 +472,9 @@ const SingleProduct = () => {
                             <g
                               id="Page-1"
                               stroke="none"
-                              stroke-width="1"
+                              strokeWidth="1"
                               fill="none"
-                              fill-rule="evenodd"
+                              fillRule="evenodd"
                             >
                               <g
                                 id="Artboard"
@@ -417,9 +515,9 @@ const SingleProduct = () => {
                             <g
                               id="Page-1"
                               stroke="none"
-                              stroke-width="1"
+                              strokeWidth="1"
                               fill="none"
-                              fill-rule="evenodd"
+                              fillRule="evenodd"
                             >
                               <g
                                 id="Artboard"
@@ -462,22 +560,11 @@ const SingleProduct = () => {
         <div className="row">
           <div className="col-12">
             <h4>Description</h4>
-            <p className="bg-white p-3">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia
-              similique quam molestiae animi quas accusamus commodi earum rerum
-              nulla expedita accusantium iure quasi provident autem, odio, ipsam
-              voluptatem consequuntur sint? Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Quia similique quam molestiae animi
-              quas accusamus commodi earum rerum nulla expedita accusantium iure
-              quasi provident autem, odio, ipsam voluptatem consequuntur sint?
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia
-              similique quam molestiae animi quas accusamus commodi earum rerum
-              nulla expedita accusantium iure quasi provident autem, odio, ipsam
-              voluptatem consequuntur sint? Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Quia similique quam molestiae animi
-              quas accusamus commodi earum rerum nulla expedita accusantium iure
-              quasi provident autem, odio, ipsam voluptatem consequuntur sint?
-            </p>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: SingleProductState?.description,
+              }}
+            ></p>
           </div>
         </div>
       </Container>
@@ -495,7 +582,11 @@ const SingleProduct = () => {
                     <ReactStars
                       count={5}
                       size={23}
-                      value={3}
+                      value={
+                        !isNaN(parseFloat(SingleProductState?.totalrating))
+                          ? parseFloat(SingleProductState?.totalrating)
+                          : 0
+                      }
                       edit={false}
                       activeColor="#febd69"
                     />
@@ -608,40 +699,32 @@ const SingleProduct = () => {
               )}
 
               <div className="reviews mt-4">
-                <div className="review">
-                  <div className="d-flex gap-3 align-items-center ">
-                    <h6 className="mb-0">Raju Solanki</h6>
-                    <ReactStars
-                      count={5}
-                      size={23}
-                      value={4}
-                      edit={false}
-                      activeColor="#febd69"
-                    />
+                {SingleProductState?.ratings?.length === 0 && (
+                  <div className="d-flex justify-content-center">
+                    <h5>No Reviews</h5>
                   </div>
-                  <p className="mt-2">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Accusamus, necessitatibus fugiat asperiores facilis ut
-                    reiciendis deleniti nostrum eum natus, laboriosam beatae
-                    obcaecati!
-                  </p>
-                  <div className="d-flex gap-3 align-items-center ">
-                    <h6 className="mb-0">Tarun Solanki</h6>
-                    <ReactStars
-                      count={5}
-                      size={23}
-                      value={4}
-                      edit={false}
-                      activeColor="#febd69"
-                    />
-                  </div>
-                  <p className="mt-2">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Accusamus, necessitatibus fugiat asperiores facilis ut
-                    reiciendis deleniti nostrum eum natus, laboriosam beatae
-                    obcaecati!
-                  </p>
-                </div>
+                )}
+                {ratings?.map((item, index) => {
+                  return (
+                    <div className="review" key={index}>
+                      <div className="d-flex gap-3 align-items-center ">
+                        <h6 className="mb-0">Raju Solanki</h6>
+                        <ReactStars
+                          count={5}
+                          size={23}
+                          value={
+                            !isNaN(parseFloat(item?.star))
+                              ? parseFloat(item?.star)
+                              : 0
+                          }
+                          edit={false}
+                          activeColor="#febd69"
+                        />
+                      </div>
+                      <p className="mt-2">{item?.comment}</p>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -654,7 +737,6 @@ const SingleProduct = () => {
           </div>
         </div>
         <div className="row">
-          <FeaturedCard />
           <FeaturedCard />
         </div>
       </Container>

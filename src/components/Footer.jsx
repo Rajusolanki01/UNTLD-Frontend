@@ -50,15 +50,17 @@ const Footer = () => {
                 Faridabad Haryana, <br />
                 PinCode: 121005
               </address>
-              <a className="text-white Link" href="tel:+">
-                (+91) 87000-(264)-51
-              </a>
-              <a
-                className="text-white mt-2 Link"
-                href="mailto:rajusolanki787@gmail.com"
-              >
-                rajusolanki787@gmail.com
-              </a>
+              <div className="d-flex flex-column">
+                <a className="text-white Link" href="tel:+">
+                  (+91) 87000-(264)-51
+                </a>
+                <a
+                  className="text-white mt-2 Link"
+                  href="mailto:rajusolanki787@gmail.com"
+                >
+                  rajusolanki787@gmail.com
+                </a>
+              </div>
               <div className="social-icons mt-3">
                 <ul className="wrapper">
                   <li className="icon facebook">

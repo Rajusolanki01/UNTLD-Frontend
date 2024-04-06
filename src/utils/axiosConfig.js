@@ -30,7 +30,6 @@ axiosClient.interceptors.request.use(
 axiosClient.interceptors.response.use(
   (response) => {
     const { data } = response;
-    console.log(data);
     if (data.status === "ok") {
       const statusCode = data.statusCode;
       if (statusCode === 201) {
@@ -69,7 +68,7 @@ axiosClient.interceptors.response.use(
             return axiosClient(originalRequest);
           } else {
             removeItem(KEY_ACCESS_TOKEN);
-            window.location.replace("/admin-login");
+            window.location.replace("/login");
             return Promise.reject(error);
           }
         })

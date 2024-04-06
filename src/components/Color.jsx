@@ -1,20 +1,19 @@
 import React from "react";
 
 const Color = ({ data }) => {
+  const uniqueColors = [...new Set(data?.flatMap((item) => item?.color))];
+
   return (
     <>
       <ul className="colors">
-        {data &&
-          data.map((item, index) => (
+        {uniqueColors &&
+          uniqueColors?.map((color, index) => (
             <li key={index}>
-              {item.color.map((color, i) => (
-                <span
-                  key={i}
-                  style={{
-                    backgroundColor: color,
-                  }}
-                ></span>
-              ))}
+              <span
+                style={{
+                  backgroundColor: color,
+                }}
+              ></span>
             </li>
           ))}
       </ul>

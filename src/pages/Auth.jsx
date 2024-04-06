@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import BreadCrum from "../components/BreadCrum";
 import Meta from "../components/Meta";
@@ -18,6 +18,7 @@ import * as yup from "yup";
 import { loginUser, registerUser } from "../feature/user/userSlice";
 import LoadingCart from "../components/LoadingCart";
 import { toast } from "sonner";
+import { KEY_ACCESS_TOKEN } from "../utils/localStoageManager";
 
 const signupSchema = yup.object({
   firstname: yup.string().required("First Name is Required"),
@@ -68,12 +69,8 @@ const Auth = () => {
     validationSchema: loginSchema,
     onSubmit: (values) => {
       dispatch(loginUser(values));
-      if (user) {
-        toast.info(`Welcome ${user.firstname} ${user.lastname}`);
-      }
-      if (user.accessToken) {
-        navigate("/");
-      }
+      navigate("/");
+      toast.success("Welcome To UNTLD.");
     },
   });
 
