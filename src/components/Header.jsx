@@ -603,13 +603,18 @@ const Header = () => {
                         </Link>
                       </li>
                       <li>
-                        <button className="cta mt-2 ms-1">
-                          <span>Admin</span>
-                          <svg width="15px" height="10px" viewBox="0 0 13 10">
-                            <path d="M1,5 L11,5"></path>
-                            <polyline points="8 1 12 5 8 9"></polyline>
-                          </svg>
-                        </button>
+                        <Link
+                        to="https://untld-admin.vercel.app/"
+                          target="_blank"
+                        >
+                          <button className="cta mt-2 ms-1">
+                            <span>Admin</span>
+                            <svg width="15px" height="10px" viewBox="0 0 13 10">
+                              <path d="M1,5 L11,5"></path>
+                              <polyline points="8 1 12 5 8 9"></polyline>
+                            </svg>
+                          </button>
+                        </Link>
                       </li>
                     </ul>
                   </div>
@@ -636,7 +641,10 @@ const Header = () => {
                       {" "}
                       <span>Contact</span>
                     </NavLink>
-                    <NavLink to="/">
+                    <NavLink
+                      to="https://untld-admin.vercel.app/"
+                      target="_blank"
+                    >
                       {" "}
                       <button className="cta">
                         <span>Admin</span>
