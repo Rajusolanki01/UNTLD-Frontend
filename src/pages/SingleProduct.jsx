@@ -34,7 +34,6 @@ const SingleProduct = () => {
   const productState = useSelector((state) => state.product.product);
   const singleUserState = useSelector((state) => state.auth.singleUser);
   const cartState = useSelector((state) => state?.auth?.userCart);
-  const [copied, setCopied] = useState(false);
   const [star, setStar] = useState(null);
   const [comment, setComment] = useState(null);
   const [selectedColor, setSelectedColor] = useState("");
@@ -134,10 +133,6 @@ const SingleProduct = () => {
   const handleCopyClick = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
-      setCopied(true);
-      setTimeout(() => {
-        setCopied(false);
-      }, 2000);
     } catch (error) {
       console.error("Error copying to clipboard:", error);
     }

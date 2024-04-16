@@ -13,7 +13,6 @@ import { toast } from "sonner";
 import { axiosClient } from "../utils/axiosConfig";
 import {
   createTheOrder,
-  removeProductFromTheCart,
 } from "../feature/user/userSlice";
 
 const checkoutSchema = yup.object({
