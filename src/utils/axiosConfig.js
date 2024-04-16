@@ -2,8 +2,6 @@ import axios from "axios";
 import {
   KEY_ACCESS_TOKEN,
   getItem,
-  removeItem,
-  setItem,
 } from "./localStoageManager";
 import { toast } from "sonner";
 
@@ -37,9 +35,6 @@ axiosClient.interceptors.response.use(
       }
       return data;
     }
-
-    const originalRequest = response.config;
-    const statusCode = data.statusCode;
     const error = data.message;
 
     if (data.statusCode === 201) {
@@ -47,40 +42,8 @@ axiosClient.interceptors.response.use(
     }
 
     toast.error(error);
-
-    if (statusCode === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      return axios
-        .get(`${process.env.REACT_APP_SERVER_BASE_URL}user/refresh-token`, {
-          withCredentials: true,
-        })
-        .then((refreshResponse) => {
-          if (
-            refreshResponse.data.status === "ok" &&
-            refreshResponse.data.result.accessToken
-          ) {
-            const newAccessToken = refreshResponse.data.result.accessToken;
-            setItem(KEY_ACCESS_TOKEN, newAccessToken);
-
-            originalRequest.headers[
-              "Authorization"
-            ] = `Bearer ${newAccessToken}`;
-            return axiosClient(originalRequest);
-          } else {
-            removeItem(KEY_ACCESS_TOKEN);
-            window.location.replace("/login");
-            return Promise.reject(error);
-          }
-        })
-        .catch((refreshError) => {
-          toast.error("Error refreshing token:", refreshError);
-          return Promise.reject(error);
-        });
-    }
-    return Promise.reject(error);
   },
   async (error) => {
-    toast.error(error);
-    return Promise.reject(error);
+    return Promise.reject("Network Error: " + error);
   }
 );

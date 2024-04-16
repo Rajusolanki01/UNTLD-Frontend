@@ -17,8 +17,8 @@ import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
 import { loginUser, registerUser } from "../feature/user/userSlice";
 import LoadingCart from "../components/LoadingCart";
+// import { KEY_ACCESS_TOKEN, getItem } from "../utils/localStoageManager";
 import { toast } from "sonner";
-import { KEY_ACCESS_TOKEN } from "../utils/localStoageManager";
 
 const signupSchema = yup.object({
   firstname: yup.string().required("First Name is Required"),
@@ -37,9 +37,9 @@ const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
-  const authState = useSelector((state) => state.auth);
-  const { isLoading, user } = authState;
   const navigate = useNavigate();
+  const authState = useSelector((state) => state.auth);
+  const { isLoading, isError, user } = authState;
 
   const formik = useFormik({
     initialValues: {
@@ -69,10 +69,15 @@ const Auth = () => {
     validationSchema: loginSchema,
     onSubmit: (values) => {
       dispatch(loginUser(values));
-      navigate("/");
-      toast.success("Welcome To UNTLD.");
     },
   });
+
+  useEffect(() => {
+    if (user !== null && isError === false) {
+      navigate("/");
+      toast.success("Welcome to UNTLD.");
+    }
+  }, [isError, navigate, user]);
 
   if (isLoading) {
     return (
@@ -98,7 +103,7 @@ const Auth = () => {
     <>
       <Meta title={"Account"} />
       <BreadCrum title="Account" />
-      <Container class1="login-wrapper home-wrapper-2 py-5">
+      <Container class1="login-wrapper home-wrapper-2 py-4">
         <div className="row">
           <div className="col-12">
             <div

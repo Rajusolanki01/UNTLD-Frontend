@@ -20,7 +20,7 @@ const BlogCard = ({ blogData }) => {
   }
 
   return (
-    <div className="blog-card">
+    <div className="blog-card me-3">
       <div className="card-image">
         <img
           src={blogData.images[0]?.url || ""}

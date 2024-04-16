@@ -58,7 +58,7 @@ const Wishlist = () => {
           )}
           {wishlistState?.map((item, index) => {
             return (
-              <div className="col-3 col-66" key={index}>
+              <div className="col-3 col-66 mb-3" key={index}>
                 <div className="wishlist-card product-card position-relative">
                   <div
                     className="position-absolute cross"

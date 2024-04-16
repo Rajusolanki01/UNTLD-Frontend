@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -25,6 +25,11 @@ import {
   UNTLDPNG,
   UNTLDG,
   Series,
+  bestSeller,
+  bestSeller1,
+  bestSeller2,
+  bestSeller4,
+  bestSeller3,
 } from "../assets/assets";
 import Container from "../components/Container";
 import { services, brandImages } from "../utils/Data";
@@ -32,23 +37,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllblogs } from "../feature/blog/blogSlice";
 import LoadingCart from "../components/LoadingCart";
 import { getAllProducts } from "../feature/product/productSlice";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 const Home = () => {
   const dispatch = useDispatch();
   const blogState = useSelector((state) => state.blog.blogs);
-  const loadingState = useSelector((state) => state.blog);
+  const loadingState = useSelector((state) => state.auth);
   const productState = useSelector((state) => state.product.product);
   const { isLoading } = loadingState;
-
-  const slicedBlogState = blogState.slice(0, 4);
-  const popularProductState = productState.slice(0, 4);
-  const featuredProductState = productState.slice(0, 4);
-  const specialProductState = productState.slice(0, 4);
+  const [isMobileView, setIsMobileView] = useState(false);
 
   useEffect(() => {
     dispatch(getAllblogs());
     dispatch(getAllProducts());
+    updateScreenSize();
+    window.addEventListener("resize", updateScreenSize);
+    return () => window.removeEventListener("resize", updateScreenSize);
   }, [dispatch]);
+
+  const updateScreenSize = () => {
+    setIsMobileView(window.innerWidth <= 768);
+  };
 
   if (isLoading) {
     return (
@@ -67,53 +77,167 @@ const Home = () => {
     autoplaySpeed: 3000,
   };
 
+  const responsive = {
+    superLargeDesktop: {
+      breakpoint: { max: 4000, min: 3000 },
+      items: 5,
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 4,
+    },
+
+    tablet: {
+      breakpoint: { max: 732, min: 464 },
+      items: 3,
+    },
+    mobile: {
+      breakpoint: { max: 430, min: 100 },
+      items: 2,
+    },
+  };
+
+  const responsive2 = {
+    superLargeDesktop: {
+      breakpoint: { max: 4000, min: 3000 },
+      items: 2,
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 2,
+    },
+
+    tablet: {
+      breakpoint: { max: 732, min: 464 },
+      items: 1,
+    },
+    mobile: {
+      breakpoint: { max: 430, min: 100 },
+      items: 1,
+    },
+  };
+
   return (
     <>
       <Container class1="home-wrapper-2 py-4">
         <div className="row">
           <div className="col-12">
-            <Slider {...setting}>
-              <div className="main-banner position-relative">
-                <Link to="/store" className="w-100">
-                  {" "}
-                  <img
-                    src={UNTLDG}
-                    alt="Main Banner"
-                    className="w-100 rounded-3"
-                  />
-                </Link>
-              </div>
-              <div className="main-banner position-relative">
-                <Link to="/store" className="w-100">
-                  {" "}
-                  <img
-                    src={UNTLDPNG}
-                    alt="Main Banner"
-                    className="w-100 rounded-3"
-                  />
-                </Link>
-              </div>
-            </Slider>
+            {isMobileView ? (
+              <Slider {...setting}>
+                <div className="main-banner position-relative">
+                  <Link to="/store" className="w-100">
+                    {" "}
+                    <img
+                      src={bestSeller}
+                      alt="Main Banner"
+                      className="w-100 rounded-3"
+                    />
+                  </Link>
+                </div>
+                <div className="main-banner position-relative">
+                  <Link to="/store" className="w-100">
+                    {" "}
+                    <img
+                      src={bestSeller1}
+                      alt="Main Banner"
+                      className="w-100 rounded-3"
+                    />
+                  </Link>
+                </div>
+                <div className="main-banner position-relative">
+                  <Link to="/store" className="w-100">
+                    {" "}
+                    <img
+                      src={bestSeller2}
+                      alt="Main Banner"
+                      className="w-100 rounded-3"
+                    />
+                  </Link>
+                </div>
+                <div className="main-banner position-relative">
+                  <Link to="/store" className="w-100">
+                    {" "}
+                    <img
+                      src={bestSeller3}
+                      alt="Main Banner"
+                      className="w-100 rounded-3"
+                    />
+                  </Link>
+                </div>
+                <div className="main-banner position-relative">
+                  <Link to="/store" className="w-100">
+                    {" "}
+                    <img
+                      src={bestSeller4}
+                      alt="Main Banner"
+                      className="w-100 rounded-3"
+                    />
+                  </Link>
+                </div>
+              </Slider>
+            ) : (
+              <Slider {...setting}>
+                <div className="main-banner position-relative">
+                  <Link to="/store" className="w-100">
+                    {" "}
+                    <img
+                      src={UNTLDG}
+                      alt="Main Banner"
+                      className="w-100 rounded-3"
+                    />
+                  </Link>
+                </div>
+                <div className="main-banner position-relative">
+                  <Link to="/store" className="w-100">
+                    {" "}
+                    <img
+                      src={UNTLDPNG}
+                      alt="Main Banner"
+                      className="w-100 rounded-3"
+                    />
+                  </Link>
+                </div>
+              </Slider>
+            )}
           </div>
         </div>
       </Container>
       <Container class1="home-wrapper-2 py-4">
         <div className="row">
           <div className="col-12">
-            <div className="services d-flex flex-wrap align-items-center justify-content-between">
-              {services.map((item, index) => (
-                <div
-                  key={index}
-                  className="service-item d-flex  align-items-center gap-2"
-                >
-                  <img src={item.image} alt="Services" />
-                  <div className="content-headings d-flex flex-column flex-wrap">
-                    <span>{item.title}</span>
-                    <p className="m-0">{item.tagline}</p>
+            {!isMobileView ? (
+              <div className="services d-flex gap-4 align-items-center justify-content-between">
+                {services.map((item, index) => (
+                  <div
+                    key={index}
+                    className="service-item d-flex justify-content-between align-items-center gap-3"
+                  >
+                    <img src={item.image} alt="Services" />
+                    <div className="content-headings d-flex flex-column flex-wrap">
+                      <span>{item.title}</span>
+                      <p className="m-0">{item.tagline}</p>
+                    </div>
                   </div>
+                ))}
+              </div>
+            ) : (
+              <Marquee className="">
+                <div className="services d-flex gap-4  align-items-center justify-content-between mb-0">
+                  {services.map((item, index) => (
+                    <div
+                      key={index}
+                      className="service-item d-flex  align-items-center gap-1"
+                    >
+                      <img src={item.image} alt="Services" />
+                      <div className="content-headings d-flex flex-column flex-wrap">
+                        <span>{item.title}</span>
+                        <p className="m-0">{item.tagline}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </Marquee>
+            )}
           </div>
         </div>
       </Container>
@@ -203,19 +327,21 @@ const Home = () => {
             <h3 className="section-heading">Featured Collection</h3>
           </div>
           <div className="row">
-            {productState &&
-              productState?.map((item, index) => {
-                if (item?.tags === "featured") {
-                  return (
-                    <FeaturedCard
-                      key={index}
-                      index={index}
-                      featuredData={item}
-                    />
-                  );
-                }
-                return null;
-              })}
+            <Carousel responsive={responsive}>
+              {productState &&
+                productState?.map((item, index) => {
+                  if (item?.tags === "featured") {
+                    return (
+                      <FeaturedCard
+                        key={index}
+                        index={index}
+                        featuredData={item}
+                      />
+                    );
+                  }
+                  return null;
+                })}
+            </Carousel>
           </div>
         </div>
       </Container>
@@ -281,17 +407,22 @@ const Home = () => {
           </div>
         </div>
         <div className="row">
-          {specialProductState &&
-            specialProductState?.map((item, index) => {
-              if (item?.tags === "special") {
-                return (
-                  <div className="col-lg-6 col-md-6 col-sm-12 mb-3" key={index}>
-                    <SpecialProduct productData={item} />
-                  </div>
-                );
-              }
-              return null;
-            })}
+          <Carousel responsive={responsive2}>
+            {productState &&
+              productState?.map((item, index) => {
+                if (item?.tags === "special") {
+                  return (
+                    <div
+                      className="col-lg-12 col-md-9 col-sm-12 mb-3"
+                      key={index}
+                    >
+                      <SpecialProduct productData={item} />
+                    </div>
+                  );
+                }
+                return null;
+              })}
+          </Carousel>
         </div>
       </Container>
       <Container class1="popular-wrapper home-wrapper-2 py-4">
@@ -301,15 +432,21 @@ const Home = () => {
           </div>
         </div>
         <div className="row">
-          {productState &&
-            productState?.map((item, index) => {
-              if (item?.tags === "popular") {
-                return (
-                  <FeaturedCard key={index} index={index} featuredData={item} />
-                );
-              }
-              return null;
-            })}
+          <Carousel responsive={responsive}>
+            {productState &&
+              productState?.map((item, index) => {
+                if (item?.tags === "popular") {
+                  return (
+                    <FeaturedCard
+                      key={index}
+                      index={index}
+                      featuredData={item}
+                    />
+                  );
+                }
+                return null;
+              })}
+          </Carousel>
         </div>
       </Container>
       <Container class1="marquee-wrapper home-wrapper-2">
@@ -336,14 +473,16 @@ const Home = () => {
           </div>
         </div>
         <div className="row">
-          {slicedBlogState &&
-            slicedBlogState.map((item, index) => {
-              return (
-                <div className="col-lg-3 col-md-6 col-sm-3" key={index}>
-                  <BlogCard blogData={item} />
-                </div>
-              );
-            })}
+          <Carousel responsive={responsive}>
+            {blogState &&
+              blogState.map((item, index) => {
+                return (
+                  <div className="col-lg-12 col-md-9 col-sm-3" key={index}>
+                    <BlogCard blogData={item} />
+                  </div>
+                );
+              })}
+          </Carousel>
         </div>
       </Container>
     </>

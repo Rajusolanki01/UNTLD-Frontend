@@ -38,8 +38,6 @@ import catBanner from "./catbanner-01.jpg";
 import catBanner2 from "./catbanner-02.jpg";
 import catBanner3 from "./catbanner-03.jpg";
 import catBanner4 from "./catbanner-04.jpg";
-import mainBanner from "./main-banner-1.jpg";
-import mainBanner2 from "./main-banner.jpg";
 import Watch from "./Watch.jpg";
 
 import BrandGif from "./Brand-01.gif";
@@ -63,6 +61,14 @@ import gr3 from "./gr3.svg";
 import gr4 from "./gr4.svg";
 import imgZoom from "./img-zoom.svg";
 import Wishlist from "./wishlist.svg";
+
+import Avatar from "./avatar-svgrepo-com.svg";
+
+import bestSeller from "./Best sellers.png";
+import bestSeller1 from "./Best sellers (1).png";
+import bestSeller2 from "./Best sellers (2).png";
+import bestSeller3 from "./Best sellers (3).png";
+import bestSeller4 from "./Best sellers (4).png";
 
 export {
   Airpods,
@@ -104,8 +110,7 @@ export {
   catBanner2,
   catBanner3,
   catBanner4,
-  mainBanner,
-  mainBanner2,
+
   Watch,
   BrandGif,
   BrandGif2,
@@ -127,4 +132,10 @@ export {
   Wishlist,
   UNTLDG,
   UNTLDPNG,
+  Avatar,
+  bestSeller,
+  bestSeller1,
+  bestSeller2,
+  bestSeller3,
+  bestSeller4,
 };

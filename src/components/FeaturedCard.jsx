@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addProductWishlist } from "../feature/product/productSlice";
-import LoadingCart from "./LoadingCart";
 
 const FeaturedCard = ({ grid, featuredData }) => {
   let location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const productState = useSelector((state) => state.product);
-  const { isLoading } = productState;
   const [wishlist, setWishlist] = useState(() => {
     const storedWishlist = localStorage.getItem("wishlist");
     return storedWishlist ? JSON.parse(storedWishlist) : {};
@@ -34,18 +31,13 @@ const FeaturedCard = ({ grid, featuredData }) => {
     };
   }, []);
 
-  if (isLoading) {
-    return (
-      <div className="LoadingBar2 row">
-        <LoadingCart />
-      </div>
-    );
-  }
   return (
     <>
       <div
-        className={`${
-          location.pathname === "/store" ? `gr-${grid}` : "col-3"
+        className={`me-3 ${
+          location.pathname === "/store"
+            ? `gr-${grid}`
+            : "col-lg-11 col-md-11 col-sm-3"
         } `}
       >
         <div className="product-card position-relative">

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Color = ({ data }) => {
+const Color = ({ data, setColor }) => {
   const uniqueColors = [...new Set(data?.flatMap((item) => item?.color))];
 
   return (
@@ -10,6 +10,7 @@ const Color = ({ data }) => {
           uniqueColors?.map((color, index) => (
             <li key={index}>
               <span
+                onClick={() => setColor(color)}
                 style={{
                   backgroundColor: color,
                 }}

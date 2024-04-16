@@ -1,10 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 
 const SpecialProduct = ({ productData, index }) => {
+  const [hours, setHours] = useState(1);
+  const [minutes, setMinutes] = useState(1);
+  const [seconds, setSeconds] = useState(1);
+
+  useEffect(() => {
+    const totalSeconds = 7 * 24 * 60 * 60;
+    let remainingSeconds = totalSeconds;
+
+    const timer = setInterval(() => {
+      remainingSeconds--;
+
+      if (remainingSeconds < 0) {
+        clearInterval(timer);
+      } else {
+        const hours = Math.floor(remainingSeconds / 3600);
+        const minutes = Math.floor((remainingSeconds % 3600) / 60);
+        const seconds = remainingSeconds % 60;
+
+        setHours(hours);
+        setMinutes(minutes);
+        setSeconds(seconds);
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const formattedHours = String(hours).padStart(2, "0");
+  const formattedMinutes = String(minutes).padStart(2, "0");
+  const formattedSeconds = String(seconds).padStart(2, "0");
+
   return (
-    <div className="special-product-card">
+    <div className="special-product-card me-4" key={index}>
       <div className="d-flex justify-content-between">
         <div className="w-100 d-flex align-items-center">
           <img
@@ -17,7 +48,7 @@ const SpecialProduct = ({ productData, index }) => {
           <h5 className="brand">{productData?.brand}</h5>{" "}
           <Link>
             <h6 className="title text-black d-flex flex-wrap">
-              {productData?.title.substr(0, 34) + ".."}
+              {productData?.title.substr(0, 30) + ".."}
             </h6>
           </Link>
           <ReactStars
@@ -38,7 +69,7 @@ const SpecialProduct = ({ productData, index }) => {
             </span>
             &nbsp;
             <strike>
-              ₹ {parseFloat(productData?.price + 20000).toLocaleString("en-IN")}{" "}
+              ₹ {parseFloat(productData?.price + 100).toLocaleString("en-IN")}{" "}
               /-
             </strike>
           </p>
@@ -46,9 +77,10 @@ const SpecialProduct = ({ productData, index }) => {
             <p className="mb-0">
               <b>7 &nbsp;</b>Days
             </p>
-            <div className="badge-circle d-flex gap-2 align-items-center">
-              <span className="">1</span>:<span className="">1</span>:
-              <span className="">1</span>
+            <div className="badge-circle d-flex justify-content-center gap-2 align-items-center">
+              <span className="py-1 p-1">{formattedHours}</span>:
+              <span className="py-1 p-2">{formattedMinutes}</span>:
+              <span className="py-1 p-2">{formattedSeconds}</span>
             </div>
           </div>
           <div className="product-count mt-3">

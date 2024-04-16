@@ -44,11 +44,6 @@ const services = [
     tagline: "100% Protacted ",
     image: Card,
   },
-  {
-    title: "Secure Payments",
-    tagline: "100% Protacted ",
-    image: Card,
-  },
 ];
 
 const brandImages = [

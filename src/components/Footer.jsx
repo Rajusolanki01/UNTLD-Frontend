@@ -44,22 +44,24 @@ const Footer = () => {
           <div className="row">
             <div className="col-lg-4 col-md-6 mb-4 mb-md-0">
               <h5 className="text-white mb-4">Contact Us</h5>
-              <address className="text-white Link">
-                Hno.552 Sector-23,
-                <br />
-                Faridabad Haryana, <br />
-                PinCode: 121005
-              </address>
-              <div className="d-flex flex-column">
-                <a className="text-white Link" href="tel:+">
-                  (+91) 87000-(264)-51
-                </a>
-                <a
-                  className="text-white mt-2 Link"
-                  href="mailto:rajusolanki787@gmail.com"
-                >
-                  rajusolanki787@gmail.com
-                </a>
+              <div className="footer-down">
+                <address className="text-white Link">
+                  Hno.552 Sector-23,
+                  <br />
+                  Faridabad Haryana, <br />
+                  PinCode: 121005
+                </address>
+                <div className="d-flex flex-column m-sm-1">
+                  <a className="text-white Link" href="tel:+">
+                    (+91) 87000-(264)-51
+                  </a>
+                  <a
+                    className="text-white mt-2 Link"
+                    href="mailto:rajusolanki787@gmail.com"
+                  >
+                    rajusolanki787@gmail.com
+                  </a>
+                </div>
               </div>
               <div className="social-icons mt-3">
                 <ul className="wrapper">
@@ -69,7 +71,11 @@ const Footer = () => {
                       <i className="fab fa-facebook-f">
                         {" "}
                         <Link to="/">
-                          <img src={Facebook} alt="Facebook" />
+                          <img
+                            src={Facebook}
+                            alt="Facebook"
+                            className="footer-img"
+                          />
                         </Link>
                       </i>
                     </span>
@@ -121,7 +127,7 @@ const Footer = () => {
                 </ul>
               </div>
             </div>
-            <div className="col-lg-3 col-md-6 mb-4 mb-md-0">
+            <div className="footer-lower-section col-3 mb-4 mb-md-0">
               <h5 className="text-white mb-4">Information</h5>
               <div className="footer-links d-flex flex-column">
                 <Link
@@ -150,7 +156,7 @@ const Footer = () => {
                 </Link>
               </div>
             </div>
-            <div className="col-lg-3 col-md-6 mb-4 mb-md-0">
+            <div className="footer-lower-sections col-3 mb-4">
               <h5 className="text-white mb-4">Account</h5>
               <div className="footer-links d-flex  flex-column">
                 <Link to="/" className="Link text-white py-2 mb-1">

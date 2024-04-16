@@ -1,10 +1,76 @@
-import React, { useEffect, useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import React, { useCallback, useEffect, useState } from "react";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { UNTLD } from "../assets/assets";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getASingleUser,
+  getUserCart,
+  logoutUser,
+} from "../feature/user/userSlice";
+import {
+  KEY_ACCESS_TOKEN,
+  KEY_USER_ID,
+  getItem,
+  removeItem,
+} from "../utils/localStoageManager";
+import { Typeahead } from "react-bootstrap-typeahead";
+import "react-bootstrap-typeahead/css/Typeahead.css";
+import { getASingleProducts } from "../feature/product/productSlice";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+  const [cartTotalPrice, setCartTotalPrice] = useState(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [paginate, setPaginate] = useState(true);
+  const [productOption, setProductOption] = useState([]);
+  const cartState = useSelector((state) => state?.auth?.userCart);
+  const authState = useSelector((state) => state?.auth.singleUser);
+  const productState = useSelector((state) => state?.product.product);
+  const id = getItem(KEY_USER_ID);
+
+  const getTheUserCart = useCallback(() => {
+    dispatch(getUserCart());
+  }, [dispatch]);
+
+  const getSingleUserId = useCallback(() => {
+    dispatch(getASingleUser(id));
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    if (productState !== null) {
+      let data = [];
+      for (let index = 0; index < productState?.length; index++) {
+        const element = productState[index];
+        data.push({
+          id: index,
+          product: element._id,
+          name: element?.title.substr(0, 25),
+        });
+      }
+      setProductOption(data);
+    }
+  }, [productState]);
+
+  useEffect(() => {
+    getTheUserCart();
+    getSingleUserId();
+  }, [getTheUserCart, getSingleUserId]);
+
+  useEffect(() => {
+    if (cartState !== null) {
+      let sum = 0;
+
+      for (let index = 0; index < cartState?.length; index++) {
+        sum =
+          sum + Number(cartState[index]?.quantity * cartState[index]?.price);
+      }
+
+      setCartTotalPrice(sum);
+    }
+  }, [cartState]);
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -21,9 +87,20 @@ const Header = () => {
     setIsDropdownOpen(!isDropdownOpen);
     setIsCheckboxChecked(!isCheckboxChecked);
   };
+
   const closeDropdown = () => {
-    setIsDropdownOpen(false);
-    setIsCheckboxChecked(false);
+    setDropdownOpen(false);
+  };
+
+  const handleLogout = async (e) => {
+    try {
+      await dispatch(logoutUser(e.target.value));
+      removeItem(KEY_ACCESS_TOKEN);
+      removeItem(KEY_USER_ID);
+      navigate("/login");
+    } catch (error) {
+      throw error;
+    }
   };
 
   // useEffect(() => {
@@ -123,12 +200,11 @@ const Header = () => {
                 </svg>
                 {isDropdownOpen && (
                   <div className="menu">
-                    <div className="header-upper-links d-flex flex-column gap-3">
+                    <div className="header-upper-links d-flex flex-column gap-4">
                       <div>
                         <Link
-                          to="/compare-products"
+                          to="/"
                           className="d-flex align-items-center gap-2 text-white"
-                          onClick={closeDropdown}
                         >
                           <lord-icon
                             className="img"
@@ -147,7 +223,6 @@ const Header = () => {
                         <Link
                           to="/compare-products"
                           className="d-flex align-items-center gap-2 text-white"
-                          onClick={closeDropdown}
                         >
                           <lord-icon
                             className="img"
@@ -166,7 +241,6 @@ const Header = () => {
                         <Link
                           to="/wishlist"
                           className="d-flex align-items-center gap-2 text-white"
-                          onClick={closeDropdown}
                         >
                           <lord-icon
                             className="img"
@@ -183,9 +257,12 @@ const Header = () => {
                       </div>
                       <div>
                         <Link
-                          to="/login"
+                          to={
+                            authState?.singleUser === null
+                              ? "/login"
+                              : "/profile"
+                          }
                           className="d-flex align-items-center gap-2 text-white"
-                          onClick={closeDropdown}
                         >
                           <lord-icon
                             src="https://cdn.lordicon.com/kthelypq.json"
@@ -194,16 +271,24 @@ const Header = () => {
                             colors="primary:#ffffff"
                             style={{ width: "38px", height: "38px" }}
                           ></lord-icon>
-                          <p className="mb-0">
-                            Log in <br /> My Account
-                          </p>
+                          {id === null ? (
+                            <p className="mb-0 me-1 text-white">
+                              Log in <br /> My Account
+                            </p>
+                          ) : (
+                            <p className="mb-0 me-1 text-white">
+                              Welcome <br />{" "}
+                              {authState.firstname && authState.lastname
+                                ? `${authState.firstname} ${authState.lastname}`
+                                : ""}
+                            </p>
+                          )}
                         </Link>
                       </div>
                       <div>
                         <Link
                           to="/cart"
                           className="d-flex align-items-center gap-2 text-white"
-                          onClick={closeDropdown}
                         >
                           <lord-icon
                             className="img"
@@ -214,10 +299,60 @@ const Header = () => {
                             style={{ width: "38px", height: "38px" }}
                           ></lord-icon>
                           <div className="d-flex flex-column gap-1">
-                            <span className="badge bg-white  text-dark">0</span>
-                            <p className="mb-0">$ 500</p>
+                            {id === null ? (
+                              <>
+                                <span className="badge bg-white  text-dark w-75 ms-1 ">
+                                  0
+                                </span>
+                                <p
+                                  className="mb-0 mt-1"
+                                  style={{ fontSize: "13px" }}
+                                >
+                                  ₹ {parseFloat(0).toLocaleString("en-IN")} /-
+                                </p>
+                              </>
+                            ) : (
+                              <>
+                                <span className="badge bg-white  text-dark w-50 ms-3 ">
+                                  {cartState?.length ? cartState?.length : 0}
+                                </span>
+                                <p
+                                  className="mb-0 mt-1"
+                                  style={{ fontSize: "13px" }}
+                                >
+                                  ₹{" "}
+                                  {parseFloat(
+                                    cartTotalPrice ? cartTotalPrice : 0
+                                  ).toLocaleString("en-IN")}{" "}
+                                  /-
+                                </p>
+                              </>
+                            )}
                           </div>
                         </Link>
+                      </div>
+                      <div onClick={handleLogout}>
+                        {id === null ? (
+                          <></>
+                        ) : (
+                          <>
+                            {" "}
+                            <Link
+                              to="/logout"
+                              className="d-flex align-items-center gap-2 text-white"
+                            >
+                              <lord-icon
+                                className="img"
+                                src="https://cdn.lordicon.com/ygvjgdmk.json"
+                                trigger="loop"
+                                delay="4000"
+                                colors="primary:#ffffff"
+                                style={{ width: "37px", height: "37px" }}
+                              ></lord-icon>
+                              <p className="mb-0">Logout</p>
+                            </Link>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -226,12 +361,24 @@ const Header = () => {
             </div>
             <div className="col-5 d-none d-md-block">
               <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control py-2"
-                  placeholder="Search Product Here..."
-                  aria-label="Search Product Here..."
-                  aria-describedby="basic-addon2"
+                <Typeahead
+                  id="pagination-example"
+                  onPaginate={(e) => setPaginate(e.target.value)}
+                  onChange={(selected) => {
+                    if (selected && selected.length > 0) {
+                      const productId = selected[0]?.product;
+                      if (productId) {
+                        navigate(`/product/${productId}`);
+                        dispatch(getASingleProducts(productId));
+                      }
+                    } else {
+                      navigate(`/store`);
+                    }
+                  }}
+                  options={productOption}
+                  paginate={paginate}
+                  labelKey={"name"}
+                  placeholder="Search For Product Here..."
                 />
                 <span className="input-group-text" id="basic-addon2">
                   <lord-icon
@@ -278,10 +425,12 @@ const Header = () => {
                     </p>
                   </Link>
                 </div>
-                <div>
-                  <Link
-                    to="/login"
-                    className="d-flex align-items-center gap-2 text-white"
+                <div className="dropdown">
+                  <button
+                    className="dropdown-toggle-1 ms-2 bg-transparent border-0 d-flex align-items-center gap-2"
+                    type="button"
+                    id="dropdownMenuButton1"
+                    aria-expanded="true"
                   >
                     <lord-icon
                       src="https://cdn.lordicon.com/kthelypq.json"
@@ -289,11 +438,64 @@ const Header = () => {
                       colors="primary:#ffffff"
                       style={{ width: "38px", height: "38px" }}
                     ></lord-icon>
-                    <p className="mb-0">
-                      Log in <br /> My Account
-                    </p>
-                  </Link>
+                    {id === null ? (
+                      <p className="mb-0 me-1 text-white">
+                        Log in <br /> My Account
+                      </p>
+                    ) : (
+                      <p className="mb-0 me-1 text-white">
+                        Welcome <br />{" "}
+                        {authState.firstname && authState.lastname
+                          ? `${authState.firstname} ${authState.lastname}`
+                          : ""}
+                      </p>
+                    )}
+                  </button>
+                  <ul
+                    className={`dropdown-menu  bg-dark ${
+                      dropdownOpen ? " show" : ""
+                    }`}
+                    aria-labelledby="dropdownMenuButton1"
+                  >
+                    {id === null ? (
+                      <li>
+                        <Link
+                          to="/login"
+                          className="d-flex fs-6 align-items-center gap-2 dropdown-item text-white"
+                          onClick={() => {
+                            setDropdownOpen(false);
+                          }}
+                        >
+                          Log in My Account
+                        </Link>
+                      </li>
+                    ) : (
+                      <>
+                        <li>
+                          <Link
+                            to="/profile"
+                            className="d-flex fs-6 align-items-center gap-2 dropdown-item text-white"
+                            onClick={() => {
+                              setDropdownOpen(false);
+                            }}
+                          >
+                            Profile
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            to=""
+                            onClick={handleLogout}
+                            className="d-flex fs-6 align-items-center gap-2 dropdown-item text-white"
+                          >
+                            Logout
+                          </Link>
+                        </li>
+                      </>
+                    )}
+                  </ul>
                 </div>
+
                 <div>
                   <Link
                     to="/cart"
@@ -307,8 +509,29 @@ const Header = () => {
                       style={{ width: "38px", height: "38px" }}
                     ></lord-icon>
                     <div className="d-flex flex-column gap-1">
-                      <span className="badge bg-white  text-dark">0</span>
-                      <p className="mb-0">$ 500</p>
+                      {id === null ? (
+                        <>
+                          <span className="badge bg-white  text-dark w-75 ms-1 ">
+                            0
+                          </span>
+                          <p className="mb-0 mt-1" style={{ fontSize: "13px" }}>
+                            ₹ {parseFloat(0).toLocaleString("en-IN")} /-
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <span className="badge bg-white  text-dark w-50 ms-3 ">
+                            {cartState?.length ? cartState?.length : 0}
+                          </span>
+                          <p className="mb-0 mt-1" style={{ fontSize: "13px" }}>
+                            ₹{" "}
+                            {parseFloat(
+                              cartTotalPrice ? cartTotalPrice : 0
+                            ).toLocaleString("en-IN")}{" "}
+                            /-
+                          </p>
+                        </>
+                      )}
                     </div>
                   </Link>
                 </div>
@@ -328,7 +551,7 @@ const Header = () => {
                       className="btns btn-secondary dropdown-toggle me-5 bg-transparent border-0 d-flex align-items-center gap-2"
                       type="button"
                       id="dropdownMenuButton1"
-                      aria-expanded="false"
+                      aria-expanded={dropdownOpen ? "true" : "false"}
                     >
                       <lord-icon
                         src="https://cdn.lordicon.com/nizfqlnk.json"
@@ -341,10 +564,12 @@ const Header = () => {
                       </span>
                     </button>
                     <ul
-                      className="dropdown-menu"
+                      className={`dropdown-menu ${
+                        dropdownOpen ? " shows" : ""
+                      }`}
                       aria-labelledby="dropdownMenuButton1"
                     >
-                      <li>
+                      <li onClick={closeDropdown}>
                         <Link to="/" className="dropdown-item text-white">
                           {" "}
                           Home
@@ -354,6 +579,12 @@ const Header = () => {
                         <Link to="/store" className="dropdown-item text-white">
                           {" "}
                           Our Store
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/orders" className="dropdown-item text-white">
+                          {" "}
+                          My Orders
                         </Link>
                       </li>
                       <li>
@@ -371,6 +602,15 @@ const Header = () => {
                           Contact
                         </Link>
                       </li>
+                      <li>
+                        <button className="cta mt-2 ms-1">
+                          <span>Admin</span>
+                          <svg width="15px" height="10px" viewBox="0 0 13 10">
+                            <path d="M1,5 L11,5"></path>
+                            <polyline points="8 1 12 5 8 9"></polyline>
+                          </svg>
+                        </button>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -383,6 +623,11 @@ const Header = () => {
                       {" "}
                       <span>Our Store</span>
                     </NavLink>
+
+                    <NavLink to="/orders">
+                      {" "}
+                      <span>My Orders</span>
+                    </NavLink>
                     <NavLink to="/blogs">
                       {" "}
                       <span>Blogs</span>
@@ -390,6 +635,16 @@ const Header = () => {
                     <NavLink to="/contact">
                       {" "}
                       <span>Contact</span>
+                    </NavLink>
+                    <NavLink to="/">
+                      {" "}
+                      <button className="cta">
+                        <span>Admin</span>
+                        <svg width="15px" height="10px" viewBox="0 0 13 10">
+                          <path d="M1,5 L11,5"></path>
+                          <polyline points="8 1 12 5 8 9"></polyline>
+                        </svg>
+                      </button>
                     </NavLink>
                   </div>
                 </div>

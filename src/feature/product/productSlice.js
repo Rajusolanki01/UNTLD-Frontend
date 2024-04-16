@@ -1,11 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { productService } from "./productService";
+import { toast } from "sonner";
 
 export const getAllProducts = createAsyncThunk(
   "product/get-all-products",
-  async (thunkAPI) => {
+  async (data, thunkAPI) => {
     try {
-      return await productService.getProducts();
+      return await productService.getProducts(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(
         error.response.data.message || error.message
@@ -32,6 +33,21 @@ export const addProductWishlist = createAsyncThunk(
   async (productId, thunkAPI) => {
     try {
       return await productService.addToWishlist(productId);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response.data.message || error.message
+      );
+    }
+  }
+);
+
+export const addRatingToProduct = createAsyncThunk(
+  "product/add-rating",
+  async (ratingData, thunkAPI) => {
+    try {
+      await productService.rating(ratingData);
+      thunkAPI.dispatch(getASingleProducts);
+      return ratingData;
     } catch (error) {
       return thunkAPI.rejectWithValue(
         error.response.data.message || error.message
@@ -94,10 +110,28 @@ export const productSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.addToWishlist = action.payload;
-        // st addToWishList = wishList?.map((id) => id.wishList);
         state.ismessage = "Success Product added to wishlist";
       })
       .addCase(addProductWishlist.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.ismessage = action.error;
+      })
+      .addCase(addRatingToProduct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addRatingToProduct.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.ratigns = action.payload;
+        if (state.isSuccess) {
+          toast.success("Review Add");
+        }
+        state.ismessage = "Rating Added Successfully";
+      })
+      .addCase(addRatingToProduct.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;

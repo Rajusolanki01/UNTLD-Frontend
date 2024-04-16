@@ -1,8 +1,16 @@
 import { axiosClient } from "../../utils/axiosConfig";
 
-const getProducts = async () => {
+const getProducts = async (data) => {
   try {
-    const response = await axiosClient.get("product");
+    const response = await axiosClient.get(
+      `product?${data?.brand ? `brand=${data?.brand}&&` : ""}${
+        data?.tag ? `tags=${data?.tag}&&` : ""
+      }${data?.category ? `category=${data?.category}&&` : ""}${
+        data?.color ? `color=${data?.color}&&` : ""
+      }${data?.minPrice ? `price[gte]=${data?.minPrice}&&` : ""}${
+        data?.maxPrice ? `price[lte]=${data?.maxPrice}&&` : ""
+      }${data?.sort ? `sort=${data?.sort}&&` : ""}`
+    );
 
     return response.result;
   } catch (error) {
@@ -29,8 +37,18 @@ const addToWishlist = async (productId) => {
   }
 };
 
+const rating = async (ratingData) => {
+  try {
+    const response = await axiosClient.put("product/rating", ratingData);
+    return response.result;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const productService = {
   getProducts,
   getSingleProduct,
   addToWishlist,
+  rating,
 };
