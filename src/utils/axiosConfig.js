@@ -1,8 +1,5 @@
 import axios from "axios";
-import {
-  KEY_ACCESS_TOKEN,
-  getItem,
-} from "./localStoageManager";
+import { KEY_ACCESS_TOKEN, getItem } from "./localStoageManager";
 import { toast } from "sonner";
 
 let baseURL = process.env.REACT_APP_SERVER_BASE_URL;
@@ -44,7 +41,11 @@ axiosClient.interceptors.response.use(
     toast.error(error);
   },
   async (error) => {
-    return Promise.reject("Network Error: " + error);
+    if (error.response && error.response.status === 404) {
+      toast.error("Server not found. Please try again later.");
+    } else {
+      toast.error(error);
+    }
+    return Promise.reject(error);
   }
 );
-
