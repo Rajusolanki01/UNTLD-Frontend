@@ -239,7 +239,7 @@ const Profile = () => {
               <div className="card__wrapper d-flex align-singleUserStates-center gap-4">
                 <button
                   type="submit"
-                  className="buttons mt-3"
+                  className="buttons deny-text mt-3"
                   onClick={updateProfileActive}
                 >
                   Update Profile
@@ -266,7 +266,7 @@ const Profile = () => {
                             Confirm
                           </button>
                           <button
-                            className="buttons login"
+                            className="buttons deny-text login"
                             onClick={handleDeleteCancel}
                           >
                             Deny
@@ -307,7 +307,7 @@ const Profile = () => {
                             <div className="" key={index}>
                               <div className="d-flex gap-2">
                                 <h6 className="mb-0">Address :</h6>
-                                <p>{item.address}</p>
+                                <p className="add-p">{item.address}</p>
                               </div>
                               <div className="d-flex gap-2">
                                 <h6 className="mb-0">Appartment :</h6>

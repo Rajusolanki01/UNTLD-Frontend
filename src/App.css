@@ -3479,12 +3479,12 @@ button:focus:not(:focus-visible) {
     font-size: 18px;
   }
 
-  .icon  {
+  .icon {
     width: 30px !important;
     height: 30px !important;
   }
 
-  .icon img  {
+  .icon img {
     width: 25px !important;
     height: 25px !important;
   }
@@ -3679,8 +3679,16 @@ button:focus:not(:focus-visible) {
   }
   .delete-block-modal {
     position: relative;
-    left: -42%;
+    left: -47%;
     top: -5%;
+  }
+
+  .deny-text {
+    font-size: 13px !important;
+  }
+
+  .add-p {
+    width: 70%;
   }
   .delete-confirm-modal {
     position: absolute;
@@ -4170,12 +4178,12 @@ button:focus:not(:focus-visible) {
     font-size: 18px;
   }
 
-  .icon  {
+  .icon {
     width: 30px !important;
     height: 30px !important;
   }
 
-  .icon img  {
+  .icon img {
     width: 25px !important;
     height: 25px !important;
   }
@@ -4383,7 +4391,7 @@ button:focus:not(:focus-visible) {
   }
 
   .card {
-    width: 400px;
+    width: 350px;
     flex-grow: 1;
   }
 
@@ -4416,8 +4424,16 @@ button:focus:not(:focus-visible) {
   }
   .delete-block-modal {
     position: relative;
-    left: -42%;
+    left: -47%;
     top: -5%;
+  }
+
+  .deny-text {
+    font-size: 13px !important;
+  }
+
+  .add-p {
+    width: 70%;
   }
   .delete-confirm-modal {
     position: absolute;
