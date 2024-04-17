@@ -4153,7 +4153,7 @@ button:focus:not(:focus-visible) {
     box-shadow: none;
     width: 100%;
     max-width: 100%;
-    min-height: 70vh;
+    min-height: 75vh;
   }
 
   .container p {
@@ -4180,7 +4180,7 @@ button:focus:not(:focus-visible) {
   }
 
   .icon {
-    margin-top: -5px !important;
+    margin-top: -10px !important;
     width: 30px !important;
     height: 30px !important;
   }
