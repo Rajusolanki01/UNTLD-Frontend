@@ -1581,15 +1581,15 @@ li {
 }
 
 .gr-6 {
-  width: 47%;
+  width: 48%;
 }
 
 .gr-4 {
-  width: 30%;
+  width: 31%;
 }
 
 .gr-3 {
-  width: 21.7%;
+  width: 22.7%;
 }
 
 .gr-12 .product-card {
@@ -3800,6 +3800,11 @@ button:focus:not(:focus-visible) {
     outline: none;
     font-size: 13px;
   }
+
+  
+  .product-card-right {
+    margin-right: 1.5rem !important; 
+  }
 }
 
 @media only screen and (max-width: 380px) {
@@ -4202,7 +4207,7 @@ button:focus:not(:focus-visible) {
   }
 
   .container form {
-     padding: 0 12px !important;
+    padding: 0 12px !important;
   }
 
   .password-eyes-login {
@@ -4543,5 +4548,9 @@ button:focus:not(:focus-visible) {
     border: none;
     outline: none;
     font-size: 13px;
+  }
+
+  .product-card-right {
+    margin-right: 1.5rem !important; 
   }
 }
