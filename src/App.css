@@ -4368,7 +4368,7 @@ button:focus:not(:focus-visible) {
   .footer-down {
     display: flex;
     justify-content: space-between;
-    margin-bottom: -10px;
+    margin-bottom: 10px;
   }
 
   .social-icons {
