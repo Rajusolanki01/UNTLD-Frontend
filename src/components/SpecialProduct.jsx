@@ -35,13 +35,13 @@ const SpecialProduct = ({ productData, index }) => {
   const formattedSeconds = String(seconds).padStart(2, "0");
 
   return (
-    <div className="special-product-card me-4" key={index}>
-      <div className="d-flex justify-content-between">
+    <div className="special-product-card me-3" key={index}>
+      <div className="card-mobile d-flex justify-content-between">
         <div className="w-100 d-flex align-items-center">
           <img
             src={productData?.images[0]?.url}
             alt="Watch"
-            className="w-75 img-fluid"
+            className="w-75 img-fluid special-card-img"
           />
         </div>
         <div className="special-product-content">

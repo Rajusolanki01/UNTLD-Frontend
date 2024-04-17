@@ -11,9 +11,7 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "sonner";
 import { axiosClient } from "../utils/axiosConfig";
-import {
-  createTheOrder,
-} from "../feature/user/userSlice";
+import { createTheOrder } from "../feature/user/userSlice";
 
 const checkoutSchema = yup.object({
   firstname: yup.string().required("First Name is Required"),
@@ -442,7 +440,7 @@ const Checkout = () => {
                         </div>
                         <div>
                           <h5
-                            className="title mt-1"
+                            className="title mt-1 checkout-title"
                             dangerouslySetInnerHTML={{
                               __html:
                                 item?.productId?.title.substr(0, 20) + "...",
@@ -450,7 +448,7 @@ const Checkout = () => {
                           ></h5>
 
                           <p
-                            className="mb-0 mt-1"
+                            className="mb-0 mt-1 checkout-price"
                             dangerouslySetInnerHTML={{
                               __html:
                                 item?.productId?.description.substr(0, 30) +
@@ -461,6 +459,7 @@ const Checkout = () => {
                             {" "}
                             <p>Color: </p>
                             <span
+                              className="checkout-color"
                               style={{
                                 display: "inline-block",
                                 width: "15px",
@@ -471,18 +470,18 @@ const Checkout = () => {
                                 marginRight: "5px",
                               }}
                             ></span>
+                            <div className="checkout-price">
+                              <h6 style={{ fontSize: "15px" }}>
+                                {" "}
+                                ₹{" "}
+                                {parseFloat(
+                                  item?.price * item?.quantity
+                                ).toLocaleString("en-IN")}{" "}
+                                /-
+                              </h6>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="d-flex flex-grow-1 mt-1">
-                        <h6 style={{ fontSize: "15px" }}>
-                          {" "}
-                          ₹{" "}
-                          {parseFloat(
-                            item?.price * item?.quantity
-                          ).toLocaleString("en-IN")}{" "}
-                          /-
-                        </h6>
                       </div>
                     </div>
                   );
@@ -490,8 +489,8 @@ const Checkout = () => {
             </div>
             <div className="border-bottom py-4">
               <div className="d-flex justify-content-between align-items-center">
-                <p>Subtotal</p>
-                <p>
+                <p className="checkout-price">Subtotal</p>
+                <p className="checkout-price">
                   {" "}
                   ₹{" "}
                   {parseFloat(
@@ -501,21 +500,19 @@ const Checkout = () => {
                 </p>
               </div>
               <div className="d-flex justify-content-between align-items-center">
-                <p className="mb-0">Shipping</p>
-                <p className="mb-0">
+                <p className="mb-0 checkout-price">Shipping</p>
+                <p className="mb-0 checkout-price">
                   ₹ <strike> 500 </strike> /-{" "}
                 </p>
               </div>
             </div>
             <div className="d-flex justify-content-between align-items-center border-bottom py-4">
-              <h4>Total</h4>
-              <h4>
+              <h4 className="checkout-total-title">Total</h4>
+              <h4 className="checkout-total-price">
                 {" "}
                 ₹{" "}
                 {parseFloat(
-                  totalPriceCheckout
-                    ? totalPriceCheckout + <strike> 500 </strike>
-                    : 0
+                  totalPriceCheckout ? totalPriceCheckout : 0
                 ).toLocaleString("en-IN")}{" "}
                 /-
               </h4>

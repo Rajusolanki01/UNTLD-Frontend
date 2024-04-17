@@ -29,7 +29,7 @@ const OurStore = () => {
       setProductsPerPage(16);
     } else if (grid === 4) {
       const isMobileView = window.innerWidth <= 768;
-      setProductsPerPage(isMobileView ? 4 : 9);
+      setProductsPerPage(isMobileView ? 6 : 9);
     } else if (grid === 6) {
       setProductsPerPage(6);
     } else if (grid === 12) {

@@ -34,7 +34,7 @@ const FeaturedCard = ({ grid, featuredData }) => {
   return (
     <>
       <div
-        className={`me-3 ${
+        className={`me-4 ${
           location.pathname === "/store"
             ? `gr-${grid}`
             : "col-lg-11 col-md-11 col-sm-3"
@@ -84,7 +84,7 @@ const FeaturedCard = ({ grid, featuredData }) => {
           <div className="product-details">
             <h6 className="brand">{featuredData?.brand}</h6>
             <h5 className="product-title">
-              {featuredData?.title.substr(0, 25)}
+              {featuredData?.title.substr(0, 19) + "..."}
             </h5>
             <ReactStars
               count={5}

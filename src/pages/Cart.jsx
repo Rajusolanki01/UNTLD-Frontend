@@ -108,7 +108,7 @@ const Cart = () => {
                           <div className="d-flex gap-2">
                             {" "}
                             <p>Color: </p>
-                            <span
+                            <span className="cart-color"
                               style={{
                                 display: "inline-block",
                                 width: "20px",
@@ -130,7 +130,7 @@ const Cart = () => {
                       <div className="cart-col-3 d-flex align-items-center gap-2">
                         <div className="form-input">
                           <input
-                            className="form-control"
+                            className="form-control form-width"
                             type="number"
                             value={item?.quantity}
                             onChange={(e) =>
@@ -140,7 +140,6 @@ const Cart = () => {
                             max={10}
                             name=""
                             id=""
-                            style={{ width: "60px" }}
                           />
                         </div>
                         <div>

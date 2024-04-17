@@ -222,16 +222,20 @@ const Home = () => {
               </div>
             ) : (
               <Marquee className="">
-                <div className="services d-flex gap-4  align-items-center justify-content-between mb-0">
+                <div className="services d-flex gap-5  align-items-center justify-content-between mb-0">
                   {services.map((item, index) => (
                     <div
                       key={index}
                       className="service-item d-flex  align-items-center gap-1"
                     >
-                      <img src={item.image} alt="Services" />
-                      <div className="content-headings d-flex flex-column flex-wrap">
-                        <span>{item.title}</span>
-                        <p className="m-0">{item.tagline}</p>
+                      <img
+                        src={item.image}
+                        alt="Services"
+                        className="service-image"
+                      />
+                      <div className="content-headings d-flex  flex-column flex-wrap">
+                        <span className="service-title">{item.title}</span>
+                        <p className="m-0 service-tagline">{item.tagline}</p>
                       </div>
                     </div>
                   ))}
