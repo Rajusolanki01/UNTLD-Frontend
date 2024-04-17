@@ -4214,7 +4214,7 @@ button:focus:not(:focus-visible) {
 
   .password-eye-signup {
     position: absolute;
-    bottom: 29.5% !important;
+    bottom: 32% !important;
     right: 13%;
     transform: translateY(-30%);
   }
