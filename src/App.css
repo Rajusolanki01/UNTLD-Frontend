@@ -4153,32 +4153,34 @@ button:focus:not(:focus-visible) {
     box-shadow: none;
     width: 100%;
     max-width: 100%;
-    min-height: 55vh;
+    min-height: 60vh;
   }
 
   .container p {
     font-size: 13px;
-    line-height: 17px;
+    line-height: 15px;
     letter-spacing: 0.3px;
     margin: 20px 0;
   }
 
   .container span {
-    font-size: 10px;
+    font-size: 8px;
   }
 
   .container a {
     color: #333;
-    font-size: 13px;
+    font-size: 10px;
     text-decoration: none;
     margin: 15px 0 10px;
   }
 
   .heading {
-    font-size: 18px;
+    font-size: 15px;
+    margin-top: -30px;
   }
 
   .icon {
+    margin-top: -5px !important;
     width: 30px !important;
     height: 30px !important;
   }
@@ -4189,8 +4191,9 @@ button:focus:not(:focus-visible) {
   }
 
   .auth-button {
-    padding: 10px 40px;
-    font-size: 10px;
+    padding: 9px 30px !important;
+    width: 100px !important;
+    font-size: 9px !important;
     background: transparent;
     border: none;
     position: relative;
@@ -4199,19 +4202,19 @@ button:focus:not(:focus-visible) {
   }
 
   .container form {
-    padding: 0 10px;
+     padding: 0 12px !important;
   }
 
   .password-eyes-login {
     position: absolute;
-    bottom: 38%;
+    bottom: 41.5% !important;
     right: 13%;
     transform: translateY(-60%);
   }
 
   .password-eye-signup {
     position: absolute;
-    bottom: 26%;
+    bottom: 20.5% !important;
     right: 13%;
     transform: translateY(-30%);
   }
