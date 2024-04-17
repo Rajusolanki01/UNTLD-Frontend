@@ -403,7 +403,7 @@ const SingleProduct = () => {
                 <div className="d-flex align-items-center gap-3 mt-4">
                   <button
                     onClick={() => addToWishlist(SingleProductState?._id)}
-                    className="d-flex align-items-center gap-2 border-0 bg-transparent"
+                    className="main-product-btn d-flex align-items-center gap-2 border-0 bg-transparent"
                   >
                     <lord-icon
                       className="img"
@@ -425,7 +425,7 @@ const SingleProduct = () => {
 
                   <button
                     to="/wishlist"
-                    className="d-flex align-items-center gap-2 border-0 bg-transparent"
+                    className="main-product-btn d-flex align-items-center gap-2 border-0 bg-transparent"
                   >
                     <lord-icon
                       className="img"

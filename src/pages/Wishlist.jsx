@@ -84,7 +84,7 @@ const Wishlist = () => {
                   </div>
                   <div className="py-3">
                     <h5 className="title">
-                      {item?.title.substr(0, 28) + "..."}
+                      {item?.title.substr(0, 18) + "..."}
                     </h5>
                     <h6 className="price">
                       {" "}

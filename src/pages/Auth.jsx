@@ -17,7 +17,6 @@ import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
 import { loginUser, registerUser } from "../feature/user/userSlice";
 import LoadingCart from "../components/LoadingCart";
-// import { KEY_ACCESS_TOKEN, getItem } from "../utils/localStoageManager";
 import { toast } from "sonner";
 
 const signupSchema = yup.object({

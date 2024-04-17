@@ -250,7 +250,7 @@ const OurStore = () => {
                           >
                             <h5
                               dangerouslySetInnerHTML={{
-                                __html: item?.title.substr(0, 21) + "...",
+                                __html: item?.title.substr(0, 19) + "...",
                               }}
                             ></h5>
                           </Link>
