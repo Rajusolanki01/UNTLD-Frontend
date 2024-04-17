@@ -4207,14 +4207,14 @@ button:focus:not(:focus-visible) {
 
   .password-eyes-login {
     position: absolute;
-    bottom: 43.5% !important;
+    bottom: 42.5% !important;
     right: 13%;
     transform: translateY(-60%);
   }
 
   .password-eye-signup {
     position: absolute;
-    bottom: 27.5% !important;
+    bottom: 29.5% !important;
     right: 13%;
     transform: translateY(-30%);
   }
