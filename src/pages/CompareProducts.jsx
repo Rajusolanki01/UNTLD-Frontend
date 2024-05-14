@@ -2,7 +2,14 @@ import React, { useEffect } from "react";
 import BreadCrum from "../components/BreadCrum";
 import Color from "../components/Color";
 import Meta from "../components/Meta";
-import { Watch } from "../assets/assets";
+import {
+  Watch,
+  Watch2,
+  appleWatchUltra,
+  appleWatchUltra2,
+  ssamsungWatchUltra,
+  ssamsungWatchUltra2,
+} from "../assets/assets";
 import Container from "../components/Container";
 
 const CompareProducts = () => {
@@ -33,11 +40,22 @@ const CompareProducts = () => {
                   style={{ width: "30px", height: "30px" }}
                 ></lord-icon>
               </div>
-              <div className="product-card-image">
-                <img src={Watch} alt="WATCH" className="img-fluid" />
+              <div className="product-card">
+                <div className="product-image">
+                  <img
+                    src={ssamsungWatchUltra}
+                    alt="Watch"
+                    className="mb-4 img-fluid prod-img"
+                  />{" "}
+                  <img
+                    src={ssamsungWatchUltra2}
+                    alt="Watch"
+                    className="mb-4 img-fluid prod-img"
+                  />
+                </div>
               </div>
               <div className="compare-product-details">
-                <h5 className="title">Samsung Galary Ultra Watch 9mm</h5>
+                <h5 className="title">Samsung Galary Watch 10mm</h5>
                 <h6 className="price">₹50,000/-</h6>
               </div>
               <div className="product-detail">
@@ -50,7 +68,7 @@ const CompareProducts = () => {
               </div>
               <div className="product-detail">
                 <h5>SKU:</h5>
-                <p className="mt-2">SKU003</p>
+                <p className="mt-2">SAM003</p>
               </div>
               <div className="product-detail">
                 <h5>Availability:</h5>
@@ -78,16 +96,27 @@ const CompareProducts = () => {
                   style={{ width: "30px", height: "30px" }}
                 ></lord-icon>
               </div>
-              <div className="product-card-image">
-                <img src={Watch} alt="WATCH" className="img-fluid" />
+              <div className="product-card">
+                <div className="product-image">
+                  <img
+                    src={appleWatchUltra}
+                    alt="Watch"
+                    className="mb-4 img-fluid prod-img"
+                  />{" "}
+                  <img
+                    src={appleWatchUltra2}
+                    alt="Watch"
+                    className="mb-4 img-fluid prod-img"
+                  />
+                </div>
               </div>
               <div className="compare-product-details">
-                <h5 className="title">Samsung Galary Ultra Watch 9mm</h5>
-                <h6 className="price">₹50,000/-</h6>
+                <h5 className="title">Apple Ultra 8 Watch 9mm</h5>
+                <h6 className="price">₹90,000/-</h6>
               </div>
               <div className="product-detail">
                 <h5>Brand:</h5>
-                <p className="mt-2">Samsung</p>
+                <p className="mt-2">Apple</p>
               </div>
               <div className="product-detail">
                 <h5>Type:</h5>
@@ -95,7 +124,7 @@ const CompareProducts = () => {
               </div>
               <div className="product-detail">
                 <h5>SKU:</h5>
-                <p className="mt-2">SKU003</p>
+                <p className="mt-2">APL008</p>
               </div>
               <div className="product-detail">
                 <h5>Availability:</h5>

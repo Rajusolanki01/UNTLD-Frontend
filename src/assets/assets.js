@@ -70,6 +70,11 @@ import bestSeller2 from "./Best sellers (2).png";
 import bestSeller3 from "./Best sellers (3).png";
 import bestSeller4 from "./Best sellers (4).png";
 
+import ssamsungWatchUltra from "./Samsung.png";
+import ssamsungWatchUltra2 from "./Samsung2.png";
+import appleWatchUltra from "./Apple.png";
+import appleWatchUltra2 from "./Apple2.png";
+
 export {
   Airpods,
   Brands,
@@ -110,7 +115,6 @@ export {
   catBanner2,
   catBanner3,
   catBanner4,
-
   Watch,
   BrandGif,
   BrandGif2,
@@ -138,4 +142,8 @@ export {
   bestSeller2,
   bestSeller3,
   bestSeller4,
+  ssamsungWatchUltra,
+  ssamsungWatchUltra2,
+  appleWatchUltra,
+  appleWatchUltra2,
 };
