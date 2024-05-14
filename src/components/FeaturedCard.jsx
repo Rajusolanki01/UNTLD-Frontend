@@ -114,13 +114,15 @@ const FeaturedCard = ({ grid, featuredData }) => {
           <div className="action-bar position-absolute">
             <div className="d-flex flex-column gap-1 mb-0">
               <button className="border-0 bg-transparent">
-                <lord-icon
-                  className="img"
-                  src="https://cdn.lordicon.com/mfmkufkr.json"
-                  trigger="click"
-                  colors="primary:#1c1c1b"
-                  style={{ width: "27px", height: "27px" }}
-                ></lord-icon>{" "}
+                <Link to="">
+                  <lord-icon
+                    className="img"
+                    src="https://cdn.lordicon.com/mfmkufkr.json"
+                    trigger="click"
+                    colors="primary:#1c1c1b"
+                    style={{ width: "27px", height: "27px" }}
+                  ></lord-icon>
+                </Link>
               </button>
               <div className="border-0 bg-transparent product-eye">
                 <Link to={`/product/${featuredData?._id}`}>

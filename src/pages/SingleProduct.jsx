@@ -91,6 +91,14 @@ const SingleProduct = () => {
     }
   };
 
+  const handleBuyNow = () => {
+    if (alreadyAdded) {
+      navigate("/checkout");
+    } else {
+      toast.info("Please Add to Cart ");
+    }
+  };
+
   useEffect(() => {
     getSingleProduct();
     getTheUserCart();
@@ -316,7 +324,10 @@ const SingleProduct = () => {
                       {SingleProductState?.color?.map((color, index) => (
                         <li key={index}>
                           <span
-                            style={{ backgroundColor: color }}
+                            style={{
+                              backgroundColor: color,
+                              border: "2px Solid #101010",
+                            }}
                             onClick={() => setSelectedColor(color)}
                           ></span>
                         </li>
@@ -374,30 +385,29 @@ const SingleProduct = () => {
                         {alreadyAdded === false ? "Add to Cart" : "Go to Cart"}
                       </p>
                     </button>
-                    <Link to="/checkout">
-                      <div
-                        className="buy-button"
-                        data-tooltip={`₹ ${parseFloat(
-                          SingleProductState?.price
-                        ).toLocaleString("en-IN")} /-`}
-                      >
-                        <div className="button-wrapper">
-                          <div className="texts">Buy it Now</div>
-                          <span className="buy-icon">
-                            <svg
-                              viewBox="0 0 16 16"
-                              className="bi bi-cart2"
-                              fill="currentColor"
-                              height="16"
-                              width="16"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"></path>
-                            </svg>
-                          </span>
-                        </div>
+                    <div
+                      className="buy-button"
+                      onClick={handleBuyNow}
+                      data-tooltip={`₹ ${parseFloat(
+                        SingleProductState?.price
+                      ).toLocaleString("en-IN")} /-`}
+                    >
+                      <div className="button-wrapper">
+                        <div className="texts">Buy it Now</div>
+                        <span className="buy-icon">
+                          <svg
+                            viewBox="0 0 16 16"
+                            className="bi bi-cart2"
+                            fill="currentColor"
+                            height="16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"></path>
+                          </svg>
+                        </span>
                       </div>
-                    </Link>
+                    </div>
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-3 mt-4">
