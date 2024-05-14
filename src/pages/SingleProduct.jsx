@@ -326,7 +326,7 @@ const SingleProduct = () => {
                           <span
                             style={{
                               backgroundColor: color,
-                              border: "2px Solid #101010",
+                              border: `2px Solid ${color}`,
                             }}
                             onClick={() => setSelectedColor(color)}
                           ></span>
