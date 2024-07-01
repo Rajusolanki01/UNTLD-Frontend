@@ -86,17 +86,17 @@ const FeaturedCard = ({ grid, featuredData }) => {
             <h5 className="product-title">
               {featuredData?.title.substr(0, 17) + "..."}
             </h5>
-            <ReactStars
-              count={5}
-              size={23}
-              value={
-                !isNaN(parseFloat(featuredData?.totalrating))
-                  ? parseFloat(featuredData?.totalrating)
-                  : 0
-              }
-              edit={false}
-              activeColor="#febd69"
-            />
+              <ReactStars
+                count={5}
+                size={23}
+                value={
+                  !isNaN(parseFloat(featuredData?.totalrating))
+                    ? parseFloat(featuredData?.totalrating)
+                    : 0
+                }
+                edit={false}
+                activeColor="#febd69"
+              />
 
             <div
               className={`description ${grid === 12 ? "d-block" : "d-none"}`}
